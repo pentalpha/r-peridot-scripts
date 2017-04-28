@@ -1,0 +1,17 @@
+[NAME]	DESeq
+[EXTERNAL-SCRIPT]	false
+[SCRIPT-NAME]	scriptDESeq.R
+[MAX-2-CONDITIONS]	true
+[CAN-HANDLE-FLOAT]	false
+[RESULT]	MAPlot.png
+[RESULT]	histogram.png
+[RESULT]	plots.pdf
+[RESULT]	res.tsv
+[RESULT]	volcanoPlot.png
+[REQUIRED-INPUT-FILE]	condition-input.tsv
+[REQUIRED-INPUT-FILE]	rna-seq-input.tsv
+[REQUIRED-PARAMETER]	fdr	Float
+[REQUIRED-PARAMETER]	log2FoldChange	Float
+[REQUIRED-PARAMETER]	pValue	Float
+[REQUIRED-PARAMETER]	tops	Integer
+[INFO]	From bioconductor.org:[LINE-BREAK]DESeq: Differential gene expression analysis based on the negative binomial distribution.[LINE-BREAK]Estimate variance-mean dependence in count data from high-throughput sequencing assays and test for differential expression based on a model using the negative binomial distribution[LINE-BREAK]Author: Simon Anders, EMBL Heidelberg <sanders at fs.tum.de>.[LINE-BREAK]Maintainer: Simon Anders <sanders at fs.tum.de>.

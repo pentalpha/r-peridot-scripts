@@ -1,0 +1,17 @@
+[NAME]	EBSeq
+[EXTERNAL-SCRIPT]	false
+[SCRIPT-NAME]	scriptEBSeq.R
+[MAX-2-CONDITIONS]	true
+[CAN-HANDLE-FLOAT]	true
+[RESULT]	MAPlot.png
+[RESULT]	histogram.png
+[RESULT]	plots.pdf
+[RESULT]	res.tsv
+[RESULT]	volcanoPlot.png
+[REQUIRED-INPUT-FILE]	condition-input.tsv
+[REQUIRED-INPUT-FILE]	rna-seq-input.tsv
+[REQUIRED-PARAMETER]	fdr	Float
+[REQUIRED-PARAMETER]	log2FoldChange	Float
+[REQUIRED-PARAMETER]	pValue	Float
+[REQUIRED-PARAMETER]	tops	Integer
+[INFO]	From bioconductor.org:[LINE-BREAK]EBSeq: An R package for gene and isoform differential expression analysis of RNA-seq data.[LINE-BREAK]Differential Expression analysis at both gene and isoform level using RNA-seq data.[LINE-BREAK]Author: Ning Leng, Christina Kendziorski.[LINE-BREAK]Maintainer: Ning Leng <lengning1 at gmail.com>.

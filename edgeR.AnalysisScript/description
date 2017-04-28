@@ -1,0 +1,17 @@
+[NAME]	edgeR
+[EXTERNAL-SCRIPT]	false
+[SCRIPT-NAME]	scriptEdgeR.R
+[MAX-2-CONDITIONS]	false
+[CAN-HANDLE-FLOAT]	true
+[RESULT]	MAPlot.png
+[RESULT]	histogram.png
+[RESULT]	plots.pdf
+[RESULT]	res.tsv
+[RESULT]	volcanoPlot.png
+[REQUIRED-INPUT-FILE]	condition-input.tsv
+[REQUIRED-INPUT-FILE]	rna-seq-input.tsv
+[REQUIRED-PARAMETER]	fdr	Float
+[REQUIRED-PARAMETER]	log2FoldChange	Float
+[REQUIRED-PARAMETER]	pValue	Float
+[REQUIRED-PARAMETER]	tops	Integer
+[INFO]	From bioconductor.org:[LINE-BREAK]edgeR: Empirical Analysis of Digital Gene Expression Data in R.[LINE-BREAK]Differential expression analysis of RNA-seq expression profiles with biological replication. Implements a range of statistical methodology based on the negative binomial distributions, including empirical Bayes estimation, exact tests, generalized linear models and quasi-likelihood tests. As well as RNA-seq, it be applied to differential signal analysis of other types of genomic data that produce counts, including ChIP-seq, SAGE and CAGE.[LINE-BREAK]Author: Yunshun Chen <yuchen at wehi.edu.au>, Aaron Lun <alun at wehi.edu.au>, Davis McCarthy <dmccarthy at wehi.edu.au>, Xiaobei Zhou <xiaobei.zhou at uzh.ch>, Mark Robinson <mark.robinson at imls.uzh.ch>, Gordon Smyth <smyth at wehi.edu.au>[LINE-BREAK]Maintainer: Yunshun Chen <yuchen at wehi.edu.au>, Aaron Lun <alun at wehi.edu.au>, Mark Robinson <mark.robinson at imls.uzh.ch>, Davis McCarthy <dmccarthy at wehi.edu.au>, Gordon Smyth <smyth at wehi.edu.au>
