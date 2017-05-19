@@ -76,7 +76,7 @@ if(notFirstRun == "0"){
   load(file = "sSeq.RData")
 }
 
-jpeg(filename = paste(outputFilesDir, "histogram.jpg", sep = "/"))
+png(filename = paste(outputFilesDir, "histogram.png", sep = "/"), width=600, height=600)
 
 #Histogram
 p1 <- with(resFinal, hist(pvalue, breaks=100, plot = F))
@@ -87,7 +87,7 @@ legend('topleft', c("PValue", "FDR(padjust)"), fill = c("skyblue", scales::alpha
 
 dev.off()
 
-jpeg(filename = paste(outputFilesDir, "MAPlot.jpg", sep = "/"))
+png(filename = paste(outputFilesDir, "MAPlot.png", sep = "/"), width=600, height=600)
 
 #MA Plot
 with(resFinal, plot(log(baseMean), log2FoldChange, pch=20, main="MA Plot"))
@@ -97,7 +97,7 @@ legend('bottomright', c(paste("FDR(padj) < ", FileConfig$fdr, sep = ""), paste("
 
 dev.off()
 
-jpeg(filename = paste(outputFilesDir, "volcanoPlot.jpg", sep = "/"))
+png(filename = paste(outputFilesDir, "volcanoPlot.png", sep = "/"), width=600, height=600)
 
 #Volcano Plot
 with(resFinal, plot(log2FoldChange, -log10(pvalue), pch=20, main="Volcano plot"))
