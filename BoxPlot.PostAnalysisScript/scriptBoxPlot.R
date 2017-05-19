@@ -18,7 +18,7 @@ notFirstRun
 
 localDir
 setwd(localDir)
-
+options(bitmapType='cairo')
 #Get Temp Diretory
 FileTemp = outputFilesDir
 

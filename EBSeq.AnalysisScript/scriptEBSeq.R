@@ -11,7 +11,7 @@ outputFilesDir
 
 notFirstRun <- args[length(args)]
 notFirstRun
-
+options(bitmapType='cairo')
 setwd(localDir)
 
 #Get file config
@@ -45,50 +45,50 @@ if(notFirstRun == "0"){
   #Finally, drop unused levels (not-use levels)
   peridotConditions = droplevels(peridotConditions)
   peridotConditions
-  
+
   #Create data matrix
   Data = data.matrix(peridotCountTable)
-  
+
   #Head matrix
   head(Data)
-  
+
   #Load EBSeq
   library(EBSeq)
-  
+
   #Specifies the median normalization function
   Sizes = MedianNorm(Data)
 
   peridotConditions$condition
   #Get the posterior probability of being DE
   EBOut = EBTest(Data = Data, Conditions = peridotConditions$condition, sizeFactors = Sizes, maxround = 5)
-  
+
   #Obtain DE analysis results in a two-condition test using the output of EBTest()
   EBDERes = GetDEResults(EBOut, FDR = FileConfig$fdr)
-  
+
   str(EBDERes$DEfound)
-  
+
   str(EBDERes$Status)
-  
+
   x = as.data.frame(EBOut$PPMat)
   x$MeanList = unlist(EBOut$MeanList)
-  
+
   #Calculates the posterior fold change for each transcript across conditions.
   GeneFC = PostFC(EBOut)
-  
+
   res = as.data.frame(unlist(EBOut$MeanList))
-  
+
   colnames(res) = "baseMean"
-  
+
   res$baseMeanA = unlist(EBOut$C2Mean)
-  
+
   res$baseMeanB = unlist(EBOut$C1Mean)
-  
+
   res$foldChange = GeneFC$RealFC
-  
+
   res$log2FoldChange = log2(GeneFC$RealFC)
-  
+
   res$pval = x$PPEE
-  
+
   res$FDR = x$PPDE
 }else{
   load(file = "EBSeq.RData")
@@ -151,7 +151,7 @@ resSig = na.omit(resSig)
 
 if(FileConfig$tops > 0){
   topRes = head(resSig, n = FileConfig$tops)
-  
+
   write.table(topRes, paste(outputFilesDir, "/TopResults.tsv", sep = ""), sep = "\t")
 }
 

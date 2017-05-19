@@ -17,7 +17,7 @@ notFirstRun <- args[length(args)]
 notFirstRun
 
 setwd(localDir)
-
+options(bitmapType='cairo')
 #Get directory
 FileConfig = getwd()
 
@@ -68,25 +68,25 @@ if(!is.null(set1)){
 }
 if(!is.null(set2)){
   sets <- c(sets, set2)
-  ncol <- ncol + 1  
+  ncol <- ncol + 1
   colset2 = ncol
   names <- c(names, "EBSeq")
 }
 if(!is.null(set3)){
   sets <- c(sets, set3)
-  ncol <- ncol + 1  
+  ncol <- ncol + 1
   colset3 = ncol
   names <- c(names, "edgeR")
 }
 if(!is.null(set4)){
   sets <- c(sets, set4)
-  ncol <- ncol + 1  
+  ncol <- ncol + 1
   colset4 = ncol
   names <- c(names, "DESeq2")
 }
 if(!is.null(set5)){
   sets <- c(sets, set5)
-  ncol <- ncol + 1  
+  ncol <- ncol + 1
   colset5 = ncol
   names <- c(names, "sSeq")
 }
