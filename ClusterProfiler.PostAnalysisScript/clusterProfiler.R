@@ -15,7 +15,7 @@ outputFilesDir
 notFirstRun <- args[length(args)]
 
 notFirstRun
-
+options(bitmapType='cairo')
 setwd(localDir)
 
 #Get directory
@@ -61,23 +61,23 @@ head(ego3)
 
 if(length(ego@result$ID) > 0){
   #jpeg(filename = paste(outputFilesDir, "enrichGOMF.jpg", sep = "/"))
-  
+
   dotplot(ego, title = "Ontology = MF", showCategory = 100, colorBy = "pvalue")
-  
+
   ggsave(filename = paste(outputFilesDir, "enrichGOMF.jpg", sep = "/"))
-  
+
   #dev.off()
 }
 
 if(length(ego2@result$ID) > 0){
   dotplot(ego2, title = "Ontology = CC", showCategory = 100, colorBy = "pvalue")
-  
+
   ggsave(filename = paste(outputFilesDir, "enrichGOCC.jpg", sep = "/"))
 }
 
 if(length(ego3@result$ID) > 0){
   dotplot(ego3, title = "Ontology = BP", showCategory = length(ego3@result$ID), colorBy = "pvalue")
-  
+
   ggsave(filename = paste(outputFilesDir, "enrichGOBP.jpg", sep = "/"))
 }
 
@@ -91,7 +91,7 @@ if(length(ego2@result$ID) > 0){
   dotplot(ego2, title = "Ontology = CC", showCategory = length(ego2@result$ID), colorBy = "pvalue")
 }
 
-if(length(ego3@result$ID) > 0){ 
+if(length(ego3@result$ID) > 0){
   dotplot(ego3, title = "Ontology = BP", showCategory = length(ego3@result$ID), colorBy = "pvalue")
 }
 

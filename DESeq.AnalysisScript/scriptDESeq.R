@@ -17,7 +17,7 @@ notFirstRun <- args[length(args)]
 notFirstRun
 
 setwd(localDir)
-
+options(bitmapType='cairo')
 #Get file config
 FileConfigPath = paste(localDir, "config.txt", sep = "/")
 
@@ -48,40 +48,40 @@ if(notFirstRun == "0"){
   #Finally, drop unused levels (not-use levels)
   peridotConditions = droplevels(peridotConditions)
   peridotConditions
-  
+
   library(DESeq)
-  
+
   peridotCountTable[] = lapply(peridotCountTable, function(x) as.integer(x))
-  
+
   #Create count data set
   cds = newCountDataSet(peridotCountTable, peridotConditions$condition)
-  
+
   #Estimate the size factors for a count data set
-  cds = estimateSizeFactors(cds) 
-  
+  cds = estimateSizeFactors(cds)
+
   #The sizeFactors vector assigns to each column of the count data a value, the size factor
   sizeFactors(cds)
-  
+
   #The counts slot holds the count data as a matrix of non-negative integer count values
   head(counts(cds, normalized=TRUE))
-  
+
   #Obtains dispersion estimates for a count data set
   cds = estimateDispersions( cds , fitType = "local")
-  
-  #Compactly display the internal structure 
+
+  #Compactly display the internal structure
   str( fitInfo(cds) )
-  
+
   head( fData(cds) )
-  
+
   #Tests for differences between the base means of two conditions (i.e., for differential expression in the case of RNA-Seq)
   res = nbinomTest( cds, levels(peridotConditions$condition)[2], levels(peridotConditions$condition)[1] )
-  
+
   head(res)
 
 }else{
   load(file = "DESeq.RData")
 }
- 
+
 png(filename = paste(outputFilesDir, "histogram.png", sep = "/"), width=600, height=600)
 
 #Histogram of PValue
@@ -142,7 +142,7 @@ resSig = na.omit(resSig)
 
 if(FileConfig$tops > 0){
   topRes = head(resSig, n = FileConfig$tops)
-  
+
   write.table(topRes, paste(outputFilesDir, "/TopResults.tsv", sep = ""), sep = "\t")
 }
 

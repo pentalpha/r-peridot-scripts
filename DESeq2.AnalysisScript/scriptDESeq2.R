@@ -18,7 +18,7 @@ notFirstRun
 
 localDir
 setwd(localDir)
-
+options(bitmapType='cairo')
 #Get file config
 FileConfigPath = paste(localDir, "config.txt", sep = "/")
 
@@ -49,25 +49,25 @@ if(notFirstRun == "0"){
   #Finally, drop unused levels (not-use levels)
   peridotConditions = droplevels(peridotConditions)
   peridotConditions
-  
+
   countData <- data.matrix(peridotCountTable)
 
   head(countData)
 
   condFac <- as.factor(peridotConditions$condition)
-  
+
   condFac
-  
+
   library(DESeq2)
-  
+
   dds = DESeqDataSetFromMatrix(countData = countData, DataFrame(condFac), ~condFac)
-  
+
   dds
-  
+
   dds <- DESeq(dds)
-  
+
   res <- results(dds)
-  
+
   res
 }else{
   load(file = "DESeq2.RData")
@@ -75,21 +75,21 @@ if(notFirstRun == "0"){
 
 if(notFirstRun == "0"){
   resFinal <- data.frame(baseMean = res$baseMean, row.names =  rownames(res))
-  
+
   baseMeanPerLvl <- sapply( levels(condFac), function(lvl) rowMeans( counts(dds,normalized=TRUE)[,condFac == lvl] ) )
-  
+
   colnames(baseMeanPerLvl) <- c("baseMeanB", "baseMeanA")
-  
+
   resFinal$baseMeanA <- baseMeanPerLvl[,1]
-  
+
   resFinal$baseMeanB <- baseMeanPerLvl[,2]
-  
+
   resFinal$foldChange <- 2^res$log2FoldChange
-  
+
   resFinal$log2FoldChange <- res$log2FoldChange
-  
+
   resFinal$pvalue <- res$pvalue
-  
+
   resFinal$padj <- res$padj
 }
 
@@ -148,7 +148,7 @@ resSig = na.omit(resSig)
 
 if(FileConfig$tops > 0){
   topRes = head(resSig, n = FileConfig$tops)
-  
+
   write.table(topRes, paste(outputFilesDir, "/TopResults.tsv", sep = ""), sep = "\t")
 }
 

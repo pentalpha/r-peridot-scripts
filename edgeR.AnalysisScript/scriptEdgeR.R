@@ -14,7 +14,7 @@ notFirstRun
 
 localDir
 setwd(localDir)
-
+options(bitmapType='cairo')
 #Get file config
 FileConfigPath = paste(localDir, "config.txt", sep = "/")
 
@@ -23,13 +23,13 @@ FileConfig = read.table(FileConfigPath, header = TRUE, row.names = 1, sep = "|")
 if(notFirstRun == "0"){
   peridotConditions = read.table(paste(inputFilesDir, "condition-input.tsv", sep = "/"), header=TRUE, row.names=1)
   peridotConditions
-  
+
   #Read Path file
   inputTableFile = paste(inputFilesDir, "rna-seq-input.tsv", sep = "/")
 
   #Read file
   peridotCountTable = read.table(inputTableFile, header=TRUE, row.names=1 )
-  
+
   #Ignore samples with "not-use" indicated
   #first, remove they from the conditions table
   peridotConditions <- subset(peridotConditions, condition != "not-use")
@@ -44,80 +44,80 @@ if(notFirstRun == "0"){
   #Finally, drop unused levels (not-use levels)
   peridotConditions = droplevels(peridotConditions)
   peridotConditions
-  
+
   #Load edgeR
   library(edgeR)
-  
+
   edesign <- model.matrix(~peridotConditions$condition)
   peridotCountTable = as.matrix(peridotCountTable)
-  
+
   #Create DGEList
   e <- DGEList(counts=peridotCountTable)
-  
+
   #Calculate nomalization factors
   e <- calcNormFactors(e)
-  
+
   normCounts <- e$counts/e$samples$norm.factors
-  
+
   BaseMeanVect = rowMeans(normCounts)
-  
+
   #Estimates a common negative binomial dispersion parameter for a DGE dataset
   e <- estimateGLMCommonDisp(e, edesign)
-  
+
   #Estimates the abundace-disersion trend
-  e <- estimateGLMTrendedDisp(e, edesign) 
-  
+  e <- estimateGLMTrendedDisp(e, edesign)
+
   #Compute an empirical Bayes estimate of the negative binomial dispersion parameter
   e <- estimateGLMTagwiseDisp(e, edesign)
-  
+
   ## Fit the model, testing the coefficient for the treated vs untreated comparison
   efit <- glmFit(e, edesign)
-  
+
   efit <- glmLRT(efit)#, coef="conditiontreated")
-  
+
   ## Make a table of results
   etable <- topTags(efit, n=nrow(e))$table
-  
+
   ## Create a column FoldChange
   etable$FoldChange = 2^etable$logFC
-  
+
   ## List of conditions A
   factA = peridotConditions$condition==levels(peridotConditions$condition)[2]
-  
+
   ## Columns with condition A
   colA = normCounts[,factA]
-  
+
   ## List of conditions B
   factB = peridotConditions$condition==levels(peridotConditions$condition)[1]
-  
+
   ## Columns with condition B
   colB = normCounts[,factB]
-  
+
   ## Means of condition A
   baseMeanA = rowMeans(colA)
-  
+
   ## Means of condition B
   baseMeanB = rowMeans(colB)
-  
+
   ## Create data frame of baseMeans
   BaseMeandf = as.data.frame(BaseMeanVect)
-  
+
   colnames(BaseMeandf) = "baseMean"
-  
+
   BaseMeandf$baseMeanA = baseMeanA
-  
+
   BaseMeandf$baseMeanB = baseMeanB
-  
+
   df = merge(BaseMeandf, etable, by = 'row.names')
-  
+
   res = df[c("Row.names", "baseMean", "baseMeanA", "baseMeanB", "FoldChange", "logFC", "logCPM", "LR", "PValue", "FDR")]
-  
+
   rownames(res) = res$Row.names
-  
+
   res$Row.names = NULL
-  
+
   res$logCPM = NULL
-  
+
   res$LR = NULL
 }else{
   load(file = "edgeR.RData")
@@ -171,7 +171,7 @@ if(FileConfig$log2FoldChange != 0 & FileConfig$pValue != 0 & FileConfig$fdr != 0
 }else if(FileConfig$fdr != 0){
   resSig = subset(res, FDR < FileConfig$fdr)
 }
-  
+
 ##Remove NA
 resSig = na.omit(resSig)
 #
@@ -180,7 +180,7 @@ head(resSig)
 
 if(FileConfig$tops > 0){
   topRes = head(resSig, n = FileConfig$tops)
-  
+
   write.table(topFDR, paste(outputFilesDir, "TopResults.tsv", sep = "/"), sep = "\t")
 }
 

@@ -18,7 +18,7 @@ notFirstRun
 
 localDir
 setwd(localDir)
-
+options(bitmapType='cairo')
 #Get file config
 FileConfigPath = paste(localDir, "config.txt", sep = "/")
 
@@ -49,34 +49,34 @@ if(notFirstRun == "0"){
   #Finally, drop unused levels (not-use levels)
   peridotConditions = droplevels(peridotConditions)
   peridotConditions
-  
+
   library(sSeq)
-  
+
   res = nbTestSH(peridotCountTable, peridotConditions$condition, levels(peridotConditions$condition)[1], levels(peridotConditions$condition)[2])
-  
+
   resFinal <- data.frame(baseMean = res$Mean, row.names =  rownames(res))
-  
+
   resFinal$baseMeanA <- res$rawMeanA
-  
+
   resFinal$baseMeanB <- res$rawMeanB
-  
+
   resFinal$foldChange <- 2^res$rawLog2FoldChange
-  
+
   resFinal$log2FoldChange <- res$rawLog2FoldChange
-  
+
   resFinal$pvalue <- res$pval
-  
+
   resFinal$padj <- p.adjust(res$pval, method = "fdr", n = length(res$pval))
-  
+
   head(p.adjust(res$pval, method = "fdr", n = length(res$pval)))
-  
+
   head(resFinal)
 
 }else{
   load(file = "sSeq.RData")
 }
-  
-jpeg(filename = paste(outputFilesDir, "histogram.jpg", sep = "/"))
+
+png(filename = paste(outputFilesDir, "histogram.png", sep = "/"), width=600, height=600)
 
 #Histogram
 p1 <- with(resFinal, hist(pvalue, breaks=100, plot = F))
@@ -87,7 +87,7 @@ legend('topleft', c("PValue", "FDR(padjust)"), fill = c("skyblue", scales::alpha
 
 dev.off()
 
-jpeg(filename = paste(outputFilesDir, "MAPlot.jpg", sep = "/"))
+png(filename = paste(outputFilesDir, "MAPlot.png", sep = "/"), width=600, height=600)
 
 #MA Plot
 with(resFinal, plot(log(baseMean), log2FoldChange, pch=20, main="MA Plot"))
@@ -97,7 +97,7 @@ legend('bottomright', c(paste("FDR(padj) < ", FileConfig$fdr, sep = ""), paste("
 
 dev.off()
 
-jpeg(filename = paste(outputFilesDir, "volcanoPlot.jpg", sep = "/"))
+png(filename = paste(outputFilesDir, "volcanoPlot.png", sep = "/"), width=600, height=600)
 
 #Volcano Plot
 with(resFinal, plot(log2FoldChange, -log10(pvalue), pch=20, main="Volcano plot"))
@@ -130,7 +130,7 @@ resSub = na.omit(resSub)
 ##Create Files Top DGE
 if(FileConfig$tops > 0 & length(resSub$padj > 0)){
   topRes = head(resSub, n = FileConfig$tops)
-  
+
   write.table(topRes, paste(outputFilesDir, "TopResults.tsv", sep = "/"), sep = "\t")
 }
 
@@ -140,7 +140,7 @@ if(length(resSub$padj > 0)){
 }
 
 pdf(file = paste(outputFilesDir, "plots.pdf", sep = "/"))
-  
+
 #Histogram
 p1 <- with(resFinal, hist(pvalue, breaks=100, plot = F))
 p2 <- with(resFinal, hist(padj, breaks=100, plot = F))
