@@ -32,28 +32,45 @@ genelist = inter = read.table(file = genelistinput, header = F, sep = "\t")
 
 library(clusterProfiler)
 library(ggplot2)
+refOrganism = params$referenceOrganism
+stopifnot(refOrganism == "Human" || refOrganism == "Mouse" || refOrganism == "Fly")
 
-eg = bitr(genelist[,1], fromType= as.character(params$geneIdType), toType = c("SYMBOL","ENTREZID", "UNIPROT"), OrgDb = "org.Mm.eg.db", drop = T)
+orgDBName<-NULL
+universe<-NULL
+
+if(refOrganism == "Human"){
+  require(org.Hs.eg.db)
+  universe = org.Hs.egENSEMBL
+  orgDBName = "org.Hs.eg.db"
+}else if(refOrganism == "Mouse"){
+  require(org.Mm.eg.db)
+  universe = org.Mm.egENSEMBL
+  orgDBName = "org.Mm.eg.db"
+}else if(refOrganism == "Fly"){
+  require(org.Dm.eg.db)
+  universe = org.Dm.egENSEMBL
+  orgDBName = "org.Dm.eg.db"
+}
+
+eg = bitr(genelist[,1], fromType= as.character(params$geneIdType), toType = c("SYMBOL","ENTREZID", "UNIPROT"), OrgDb = orgDBName, drop = T)
 
 head(eg$ENTREZID)
 
-universe = org.Mm.egENSEMBL
-
 mappedGenes = mappedkeys(universe)
 
-ego = enrichGO(gene = eg$ENTREZID, universe = mappedGenes, OrgDb = "org.Mm.eg.db", ont = "MF", readable = T, pAdjustMethod = "BH", pvalueCutoff  = 1, qvalueCutoff = 1)
+ego = enrichGO(gene = eg$ENTREZID, universe = mappedGenes, OrgDb = orgDBName, ont = "MF", readable = T, pAdjustMethod = "BH", pvalueCutoff  = 1, qvalueCutoff = 1)
 ego@result = subset(ego@result, (pvalue < params$pValue & qvalue < params$fdr))
 ego@result$Description = strtrim(ego@result$Description, 20)
 ego@result$Description = lapply(ego@result$Description, function(x) paste(x, "...", sep = ""))
 head(ego)
 
-ego2 = enrichGO(gene = eg$ENTREZID, universe = mappedGenes, OrgDb = "org.Mm.eg.db", ont = "CC", readable = T, pAdjustMethod = "BH", pvalueCutoff  = 1, qvalueCutoff = 1)
+ego2 = enrichGO(gene = eg$ENTREZID, universe = mappedGenes, OrgDb = orgDBName, ont = "CC", readable = T, pAdjustMethod = "BH", pvalueCutoff  = 1, qvalueCutoff = 1)
 ego2@result = subset(ego2@result, (pvalue < params$pValue & qvalue < params$fdr))
 ego2@result$Description = strtrim(ego2@result$Description, 20)
 ego2@result$Description = lapply(ego2@result$Description, function(x) paste(x, "...", sep = ""))
 head(ego2)
 
-ego3 = enrichGO(gene = eg$ENTREZID, universe = mappedGenes, OrgDb = "org.Mm.eg.db", ont = "BP", readable = T, pAdjustMethod = "BH", pvalueCutoff  = 1, qvalueCutoff = 1)
+ego3 = enrichGO(gene = eg$ENTREZID, universe = mappedGenes, OrgDb = orgDBName, ont = "BP", readable = T, pAdjustMethod = "BH", pvalueCutoff  = 1, qvalueCutoff = 1)
 ego3@result = subset(ego3@result, (pvalue < params$pValue & qvalue < params$fdr))
 ego3@result$Description = strtrim(ego3@result$Description, 20)
 ego3@result$Description = lapply(ego3@result$Description, function(x) paste(x, "...", sep = ""))
