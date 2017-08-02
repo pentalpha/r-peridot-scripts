@@ -10,7 +10,7 @@
 [REQUIRED-INPUT-FILE]	VennDiagram.PostAnalysisScript/Intersect.tsv
 [REQUIRED-SCRIPT]	VennDiagram
 [REQUIRED-PARAMETER]	fdr	Float
-[REQUIRED-PARAMETER]	geneIdType	GeneIdType
+[REQUIRED-PARAMETER]	idType	GeneIdType
 [REQUIRED-PARAMETER]	pValue	Float
 [REQUIRED-PARAMETER]	referenceOrganism	Organism
 [INFO]	From bioconductor.org:[LINE-BREAK]ClusterProfiler: Statistical analysis and visualization of functional profiles for genes and gene clusters.[LINE-BREAK]This package implements methods to analyze and visualize functional profiles (GO and KEGG) of gene and gene clusters.[LINE-BREAK]Author: Guangchuang Yu [aut, cre], Li-Gen Wang [ctb], Giovanni Dall'Olio [ctb] (formula interface of compareCluster)[LINE-BREAK]Maintainer: Guangchuang Yu <guangchuangyu at gmail.com>

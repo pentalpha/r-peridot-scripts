@@ -52,7 +52,7 @@ if(refOrganism == "Human"){
   orgDBName = "org.Dm.eg.db"
 }
 
-eg = bitr(genelist[,1], fromType= as.character(params$geneIdType), toType = c("SYMBOL","ENTREZID", "UNIPROT"), OrgDb = orgDBName, drop = T)
+eg = bitr(genelist[,1], fromType= as.character(params$idType), toType = c("SYMBOL","ENTREZID", "UNIPROT"), OrgDb = orgDBName, drop = T)
 
 head(eg$ENTREZID)
 
