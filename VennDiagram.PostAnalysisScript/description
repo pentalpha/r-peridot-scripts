@@ -2,7 +2,6 @@
 [EXTERNAL-SCRIPT]	false
 [SCRIPT-NAME]	vennDiagram.R
 [MAX-2-CONDITIONS]	false
-[CAN-HANDLE-FLOAT]	true
 [RESULT]	Intersect.tsv
 [RESULT]	plots.pdf
 [RESULT]	vennDiagramPlot.png

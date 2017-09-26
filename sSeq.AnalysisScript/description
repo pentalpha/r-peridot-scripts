@@ -2,7 +2,6 @@
 [EXTERNAL-SCRIPT]	false
 [SCRIPT-NAME]	scriptSeq.R
 [MAX-2-CONDITIONS]	false
-[CAN-HANDLE-FLOAT]	true
 [RESULT]	MAPlot.png
 [RESULT]	histogram.png
 [RESULT]	plots.pdf
@@ -14,4 +13,8 @@
 [REQUIRED-PARAMETER]	log2FoldChange	Float
 [REQUIRED-PARAMETER]	pValue	Float
 [REQUIRED-PARAMETER]	tops	Integer
-[INFO]	From bioconductor.org:[LINE-BREAK]sSeq: Shrinkage estimation of dispersion in Negative Binomial models for RNA-seq experiments with small sample size.[LINE-BREAK]The purpose of this package is to discover the genes that are differentially expressed between two conditions in RNA-seq experiments. Gene expression is measured in counts of transcripts and modeled with the Negative Binomial (NB) distribution using a shrinkage approach for dispersion estimation. The method of moment (MM) estimates for dispersion are shrunk towards an estimated target, which minimizes the average squared difference between the shrinkage estimates and the initial estimates. The exact per-gene probability under the NB model is calculated, and used to test the hypothesis that the expected expression of a gene in two conditions identically follow a NB distribution.[LINE-BREAK]Author: Danni Yu <dyu at purdue.edu>, Wolfgang Huber <whuber at embl.de> and Olga Vitek <ovitek at purdue.edu>[LINE-BREAK]Maintainer: Danni Yu <dyu at purdue.edu>
+[INFO]	From bioconductor.org:
+[INFO]	sSeq: Shrinkage estimation of dispersion in Negative Binomial models for RNA-seq experiments with small sample size.
+[INFO]	The purpose of this package is to discover the genes that are differentially expressed between two conditions in RNA-seq experiments. Gene expression is measured in counts of transcripts and modeled with the Negative Binomial (NB) distribution using a shrinkage approach for dispersion estimation. The method of moment (MM) estimates for dispersion are shrunk towards an estimated target, which minimizes the average squared difference between the shrinkage estimates and the initial estimates. The exact per-gene probability under the NB model is calculated, and used to test the hypothesis that the expected expression of a gene in two conditions identically follow a NB distribution.
+[INFO]	Author: Danni Yu <dyu at purdue.edu>, Wolfgang Huber <whuber at embl.de> and Olga Vitek <ovitek at purdue.edu>
+[INFO]	Maintainer: Danni Yu <dyu at purdue.edu>

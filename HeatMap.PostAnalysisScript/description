@@ -2,7 +2,6 @@
 [EXTERNAL-SCRIPT]	false
 [SCRIPT-NAME]	Heatmap.R
 [MAX-2-CONDITIONS]	false
-[CAN-HANDLE-FLOAT]	true
 [RESULT]	Dendrogram.png
 [RESULT]	HeatMap.pdf
 [RESULT]	HeatMap.png
