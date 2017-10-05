@@ -5,7 +5,7 @@
 [RESULT]	MAPlot.png
 [RESULT]	histogram.png
 [RESULT]	plots.pdf
-[RESULT]	res.tsv
+[MANDATORY-RESULT]	res.tsv
 [RESULT]	volcanoPlot.png
 [REQUIRED-INPUT-FILE]	condition-input.tsv
 [REQUIRED-INPUT-FILE]	rna-seq-input.tsv

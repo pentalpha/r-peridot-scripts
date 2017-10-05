@@ -4,7 +4,7 @@
 [MAX-2-CONDITIONS]	false
 [RESULT]	Dendrogram.png
 [RESULT]	HeatMap.pdf
-[RESULT]	HeatMap.png
+[MANDATORY-RESULT]	HeatMap.png
 [RESULT]	NormalizedCounts.tsv
 [RESULT]	PCA.png
 [RESULT]	aux1.pdf
