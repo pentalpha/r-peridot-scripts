@@ -94,10 +94,16 @@ if(notFirstRun == "0"){
   colB = normCounts[,factB]
 
   ## Means of condition A
-  baseMeanA = rowMeans(colA)
+  baseMeanA = colA
+  if(!(is.null(dim(colA)))){
+    baseMeanA = rowMeans(colA)
+  }
 
   ## Means of condition B
-  baseMeanB = rowMeans(colB)
+  baseMeanB = colB
+  if(!(is.null(dim(colA)))){
+    baseMeanB = rowMeans(colB)
+  }
 
   ## Create data frame of baseMeans
   BaseMeandf = as.data.frame(BaseMeanVect)

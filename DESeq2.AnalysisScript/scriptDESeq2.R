@@ -73,10 +73,18 @@ if(notFirstRun == "0"){
   load(file = "DESeq2.RData")
 }
 
+adaptativeRowMeans <- function(columns){
+  if(is.null(dim(columns))){
+    return(columns)
+  }else{
+    return(rowMeans(columns))
+  }
+}
+
 if(notFirstRun == "0"){
   resFinal <- data.frame(baseMean = res$baseMean, row.names =  rownames(res))
 
-  baseMeanPerLvl <- sapply( levels(condFac), function(lvl) rowMeans( counts(dds,normalized=TRUE)[,condFac == lvl] ) )
+  baseMeanPerLvl <- sapply( levels(condFac), function(lvl) adaptativeRowMeans( counts(dds,normalized=TRUE)[,condFac == lvl] ) )
 
   colnames(baseMeanPerLvl) <- c("baseMeanB", "baseMeanA")
 

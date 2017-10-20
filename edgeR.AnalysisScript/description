@@ -1,7 +1,7 @@
 [NAME]	edgeR
 [EXTERNAL-SCRIPT]	false
 [SCRIPT-NAME]	scriptEdgeR.R
-[MAX-2-CONDITIONS]	false
+[MAX-2-CONDITIONS]	true
 [RESULT]	MAPlot.png
 [RESULT]	histogram.png
 [RESULT]	plots.pdf
