@@ -191,9 +191,9 @@ if(FileConfig$tops > 0){
 }
 
 ##Create files csv
-if(length(resSig$FDR > 0)){
+#if(length(resSig$FDR > 0)){
   write.table(resSig, paste(outputFilesDir, "res.tsv", sep = "/"), sep = "\t")
-}
+#}
 #
 
 pdf(file = paste(outputFilesDir, "plots.pdf", sep = "/"))

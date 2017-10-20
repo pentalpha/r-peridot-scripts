@@ -135,9 +135,9 @@ if(FileConfig$tops > 0 & length(resSub$padj > 0)){
 }
 
 ##Create files tsv
-if(length(resSub$padj > 0)){
+#if(length(resSub$padj > 0)){
   write.table(resSub, paste(outputFilesDir, "res.tsv", sep = "/"), sep = "\t")
-}
+#}
 
 pdf(file = paste(outputFilesDir, "plots.pdf", sep = "/"))
 
