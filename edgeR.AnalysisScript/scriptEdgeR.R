@@ -101,7 +101,7 @@ if(notFirstRun == "0"){
 
   ## Means of condition B
   baseMeanB = colB
-  if(!(is.null(dim(colA)))){
+  if(!(is.null(dim(colB)))){
     baseMeanB = rowMeans(colB)
   }
 
