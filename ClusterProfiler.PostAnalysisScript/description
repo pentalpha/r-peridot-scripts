@@ -2,6 +2,7 @@
 [EXTERNAL-SCRIPT]	false
 [SCRIPT-NAME]	clusterProfiler.R
 [MAX-2-CONDITIONS]	false
+[NEEDS-REPLICATES]	false
 [RESULT]	enrich.pdf
 [RESULT]	enrichGOBP.jpg
 [RESULT]	enrichGOCC.jpg

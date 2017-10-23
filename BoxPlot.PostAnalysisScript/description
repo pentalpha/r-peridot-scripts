@@ -2,5 +2,6 @@
 [EXTERNAL-SCRIPT]	false
 [SCRIPT-NAME]	scriptBoxPlot.R
 [MAX-2-CONDITIONS]	false
+[NEEDS-REPLICATES]	false
 [MANDATORY-RESULT]	BoxPlot.png
 [INFO]	BoxPlot: Produces box-and-whisker plot of each sample reads.

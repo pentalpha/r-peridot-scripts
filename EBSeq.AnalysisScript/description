@@ -2,6 +2,7 @@
 [EXTERNAL-SCRIPT]	false
 [SCRIPT-NAME]	scriptEBSeq.R
 [MAX-2-CONDITIONS]	true
+[NEEDS-REPLICATES]	false
 [RESULT]	MAPlot.png
 [RESULT]	histogram.png
 [RESULT]	plots.pdf

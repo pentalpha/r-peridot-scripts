@@ -2,6 +2,7 @@
 [EXTERNAL-SCRIPT]	false
 [SCRIPT-NAME]	scriptDESeq2.R
 [MAX-2-CONDITIONS]	false
+[NEEDS-REPLICATES]	true
 [RESULT]	MAPlot.png
 [RESULT]	histogram.png
 [RESULT]	plots.pdf

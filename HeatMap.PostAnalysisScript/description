@@ -2,6 +2,7 @@
 [EXTERNAL-SCRIPT]	false
 [SCRIPT-NAME]	Heatmap.R
 [MAX-2-CONDITIONS]	false
+[NEEDS-REPLICATES]	false
 [RESULT]	Dendrogram.png
 [RESULT]	HeatMap.pdf
 [MANDATORY-RESULT]	HeatMap.png
