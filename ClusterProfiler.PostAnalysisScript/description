@@ -3,7 +3,8 @@
 [SCRIPT-NAME]	clusterProfiler.R
 [MAX-2-CONDITIONS]	false
 [NEEDS-REPLICATES]	false
-[RESULT]	enrich.pdf
+[MANDATORY-RESULT]	enrich.pdf
+[RESULT]	KEGG_GO.jpg
 [RESULT]	enrichGOBP.jpg
 [RESULT]	enrichGOCC.jpg
 [RESULT]	enrichGOMF.jpg

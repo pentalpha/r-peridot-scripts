@@ -60,46 +60,65 @@ mappedGenes = mappedkeys(universe)
 
 ego = enrichGO(gene = eg$ENTREZID, universe = mappedGenes, OrgDb = orgDBName, ont = "MF", readable = T, pAdjustMethod = "BH", pvalueCutoff  = 1, qvalueCutoff = 1)
 ego@result = subset(ego@result, (pvalue < params$pValue & qvalue < params$fdr))
-ego@result$Description = strtrim(ego@result$Description, 20)
-ego@result$Description = lapply(ego@result$Description, function(x) paste(x, "...", sep = ""))
 head(ego)
 
 ego2 = enrichGO(gene = eg$ENTREZID, universe = mappedGenes, OrgDb = orgDBName, ont = "CC", readable = T, pAdjustMethod = "BH", pvalueCutoff  = 1, qvalueCutoff = 1)
 ego2@result = subset(ego2@result, (pvalue < params$pValue & qvalue < params$fdr))
-ego2@result$Description = strtrim(ego2@result$Description, 20)
-ego2@result$Description = lapply(ego2@result$Description, function(x) paste(x, "...", sep = ""))
 head(ego2)
 
 ego3 = enrichGO(gene = eg$ENTREZID, universe = mappedGenes, OrgDb = orgDBName, ont = "BP", readable = T, pAdjustMethod = "BH", pvalueCutoff  = 1, qvalueCutoff = 1)
 ego3@result = subset(ego3@result, (pvalue < params$pValue & qvalue < params$fdr))
-ego3@result$Description = strtrim(ego3@result$Description, 20)
-ego3@result$Description = lapply(ego3@result$Description, function(x) paste(x, "...", sep = ""))
 head(ego3)
 
+#Length of the number of Category
+lenCategoryEgo = length(ego@result$ID)
+lenCategoryEgo2 = length(ego2@result$ID)
+lenCategoryEgo3 = length(ego3@result$ID)
+
+#Length of the number of chars of description
+lenDescriptionCharEgo = nchar(max(ego@result$Description))
+lenDescriptionCharEgo2 = nchar(max(ego2@result$Description))
+lenDescriptionCharEgo3 = nchar(max(ego3@result$Description))
+
+height = max(lenCategoryEgo, lenCategoryEgo2, lenCategoryEgo3)
+width = max(lenDescriptionCharEgo, lenDescriptionCharEgo2, lenDescriptionCharEgo3)
+
+if(height/6 <= 8){
+  height = 10
+}else if(height/6 > 50){
+  height = 50
+}else{
+  height = height/6
+}
+
+if(width/6 <= 8){
+  width = 10
+}else if(width/6 > 50){
+  width = 50
+}else{
+  width = width/6
+}
+
 if(length(ego@result$ID) > 0){
-  #jpeg(filename = paste(outputFilesDir, "enrichGOMF.jpg", sep = "/"))
+  dotplot(ego, title = "Ontology = MF", showCategory = lenCategoryEgo, colorBy = "pvalue")
 
-  dotplot(ego, title = "Ontology = MF", showCategory = 100, colorBy = "pvalue")
-
-  ggsave(filename = paste(outputFilesDir, "enrichGOMF.jpg", sep = "/"))
-
-  #dev.off()
+  ggsave(filename = paste(outputFilesDir, "enrichGOMF.jpg", sep = "/"), width = width, height = height)
 }
 
 if(length(ego2@result$ID) > 0){
   dotplot(ego2, title = "Ontology = CC", showCategory = 100, colorBy = "pvalue")
-
-  ggsave(filename = paste(outputFilesDir, "enrichGOCC.jpg", sep = "/"))
+  
+  ggsave(filename = paste(outputFilesDir, "enrichGOCC.jpg", sep = "/"), width = width, height = height)
 }
 
 if(length(ego3@result$ID) > 0){
   dotplot(ego3, title = "Ontology = BP", showCategory = length(ego3@result$ID), colorBy = "pvalue")
 
-  ggsave(filename = paste(outputFilesDir, "enrichGOBP.jpg", sep = "/"))
+  ggsave(filename = paste(outputFilesDir, "enrichGOBP.jpg", sep = "/"), width = width, height = height)
 }
 
-
-pdf(file = paste(outputFilesDir, "enrich.pdf", sep = "/"))
+#0,077898551 inches per char
+pdf(file = paste(outputFilesDir, "enrich.pdf", sep = "/"), width = width, height = height)
 if(length(ego@result$ID) > 0){
   dotplot(ego, title = "Ontology = MF", showCategory = length(ego@result$ID), colorBy = "pvalue")
 }
@@ -119,21 +138,18 @@ eg2np <- bitr_kegg(eg$ENTREZID, fromType='kegg', toType='ncbi-geneid', organism=
 
 kk <- enrichKEGG(eg2np$kegg, organism = 'mmu', pvalueCutoff = 1, qvalueCutoff = 1)
 
-#kk@result = subset(kk@result, (pvalue < params$pValue & qvalue < params$fdr))
+kk@result = subset(kk@result, (pvalue < params$pValue & qvalue < params$fdr))
 
-kk@result = subset(kk@result, (pvalue < 0.01 & qvalue < 0.05))
+if(length(kk@result$ID) > 0){
+  dotplot(kk, title = "KEGG Ontology", showCategory = length(kk@result$ID), colorBy = "pvalue")
+  
+  ggsave(filename = paste(outputFilesDir, "KEGG_GO.jpg", sep = "/"), width = width, height = height)
+}
 
-dotplot(kk)
-kk@result$ID[1]
-testeKEGG <- browseKEGG(kk, kk@result$ID[1])
-kk@result
+urlPath = vector()
 
+urlPath = sapply(kk@result$ID, function(x){
+  browseKEGG(kk, x)
+})
 
-teste = pathview(gene.data = kk@result$geneID, pathway.id = kk@result$ID, species = "mmu", kegg.dir = outputFilesDir, kegg.native = T)
-
-gene = list(gene=max(abs(testeGene)), cpd=1)
-View(genelist)
-geneIDpvalue
-View(geneList)
-
-str(teste$mmu00190)
+write.table(x = data.frame(urlPath), file = paste(outputFilesDir, "urlPaths.tsv", sep = "/"), sep = "\t", quote = F)
