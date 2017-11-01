@@ -26,7 +26,7 @@ params
 #Get Temp Diretory
 FileTemp = outputFilesDir
 
-genelistinput = paste(inputFilesDir, "VennDiagram.PostAnalysisScript/Intersect.tsv", sep = "/");
+genelistinput = paste(inputFilesDir, "VennDiagram.PostAnalysisModule/Intersect.tsv", sep = "/");
 
 genelist = inter = read.table(file = genelistinput, header = F, sep = "\t")
 

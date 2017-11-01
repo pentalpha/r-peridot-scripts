@@ -30,22 +30,22 @@ setEdgeR = NULL
 setDESeq2 = NULL
 setsSeq = NULL
 
-if(file.exists(paste(inputFilesDir, "/DESeq.AnalysisScript/res.tsv", sep = ""))){
-  setDESeq = read.csv(paste(inputFilesDir, "/DESeq.AnalysisScript/res.tsv", sep = ""), sep = "\t")
+if(file.exists(paste(inputFilesDir, "/DESeq.AnalysisModule/res.tsv", sep = ""))){
+  setDESeq = read.csv(paste(inputFilesDir, "/DESeq.AnalysisModule/res.tsv", sep = ""), sep = "\t")
 }
 
-if(file.exists(paste(inputFilesDir, "/EBSeq.AnalysisScript/res.tsv", sep = ""))){
-  setEBSeq = read.csv(paste(inputFilesDir, "/EBSeq.AnalysisScript/res.tsv", sep = ""), sep = "\t")
+if(file.exists(paste(inputFilesDir, "/EBSeq.AnalysisModule/res.tsv", sep = ""))){
+  setEBSeq = read.csv(paste(inputFilesDir, "/EBSeq.AnalysisModule/res.tsv", sep = ""), sep = "\t")
 }
 
-if(file.exists(paste(inputFilesDir, "/edgeR.AnalysisScript/res.tsv", sep = ""))){
-  setEdgeR = read.csv(paste(inputFilesDir, "/edgeR.AnalysisScript/res.tsv", sep = ""), sep = "\t")
+if(file.exists(paste(inputFilesDir, "/edgeR.AnalysisModule/res.tsv", sep = ""))){
+  setEdgeR = read.csv(paste(inputFilesDir, "/edgeR.AnalysisModule/res.tsv", sep = ""), sep = "\t")
 }
-if(file.exists(paste(inputFilesDir, "/DESeq2.AnalysisScript/res.tsv", sep = ""))){
-  setDESeq2 = read.csv(paste(inputFilesDir, "/DESeq2.AnalysisScript/res.tsv", sep = ""), sep = "\t")
+if(file.exists(paste(inputFilesDir, "/DESeq2.AnalysisModule/res.tsv", sep = ""))){
+  setDESeq2 = read.csv(paste(inputFilesDir, "/DESeq2.AnalysisModule/res.tsv", sep = ""), sep = "\t")
 }
-if(file.exists(paste(inputFilesDir, "/sSeq.AnalysisScript/res.tsv", sep = ""))){
-  setsSeq = read.csv(paste(inputFilesDir, "/sSeq.AnalysisScript/res.tsv", sep = ""), sep = "\t")
+if(file.exists(paste(inputFilesDir, "/sSeq.AnalysisModule/res.tsv", sep = ""))){
+  setsSeq = read.csv(paste(inputFilesDir, "/sSeq.AnalysisModule/res.tsv", sep = ""), sep = "\t")
 }
 
 library(limma)

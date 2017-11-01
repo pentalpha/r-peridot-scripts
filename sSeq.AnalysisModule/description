@@ -1,5 +1,4 @@
 [NAME]	sSeq
-[EXTERNAL-SCRIPT]	false
 [SCRIPT-NAME]	scriptSeq.R
 [MAX-2-CONDITIONS]	false
 [NEEDS-REPLICATES]	false

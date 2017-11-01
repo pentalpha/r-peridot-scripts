@@ -1,5 +1,4 @@
 [NAME]	edgeR
-[EXTERNAL-SCRIPT]	false
 [SCRIPT-NAME]	scriptEdgeR.R
 [MAX-2-CONDITIONS]	true
 [NEEDS-REPLICATES]	true

@@ -1,5 +1,4 @@
 [NAME]	VennDiagram
-[EXTERNAL-SCRIPT]	false
 [SCRIPT-NAME]	vennDiagram.R
 [MAX-2-CONDITIONS]	false
 [NEEDS-REPLICATES]	false

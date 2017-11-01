@@ -1,5 +1,4 @@
 [NAME]	HeatMap
-[EXTERNAL-SCRIPT]	false
 [SCRIPT-NAME]	Heatmap.R
 [MAX-2-CONDITIONS]	false
 [NEEDS-REPLICATES]	false
@@ -10,6 +9,6 @@
 [RESULT]	PCA.png
 [RESULT]	aux1.pdf
 [RESULT]	aux2.pdf
-[REQUIRED-INPUT-FILE]	VennDiagram.PostAnalysisScript/Intersect.tsv
+[REQUIRED-INPUT-FILE]	VennDiagram.PostAnalysisModule/Intersect.tsv
 [REQUIRED-SCRIPT]	VennDiagram
 [INFO]	HeatMap: Creates a normalized version of VennDiagram's "Intersect.tsv", a Dendogram plot and a HeatMap plot.

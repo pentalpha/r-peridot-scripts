@@ -1,5 +1,4 @@
 [NAME]	ClusterProfiler
-[EXTERNAL-SCRIPT]	false
 [SCRIPT-NAME]	clusterProfiler.R
 [MAX-2-CONDITIONS]	false
 [NEEDS-REPLICATES]	false
@@ -8,7 +7,7 @@
 [RESULT]	enrichGOBP.jpg
 [RESULT]	enrichGOCC.jpg
 [RESULT]	enrichGOMF.jpg
-[REQUIRED-INPUT-FILE]	VennDiagram.PostAnalysisScript/Intersect.tsv
+[REQUIRED-INPUT-FILE]	VennDiagram.PostAnalysisModule/Intersect.tsv
 [REQUIRED-SCRIPT]	VennDiagram
 [REQUIRED-PARAMETER]	fdr	Float
 [REQUIRED-PARAMETER]	idType	GeneIdType

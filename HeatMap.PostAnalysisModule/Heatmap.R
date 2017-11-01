@@ -80,7 +80,7 @@ library(pvclust)
 library(gplots)
 
 # Abrir o arquivo de miRNAs achados nos pacotes do R-peridot #
-intersectFile = paste(inputFilesDir, "VennDiagram.PostAnalysisScript/Intersect.tsv", sep = "/")
+intersectFile = paste(inputFilesDir, "VennDiagram.PostAnalysisModule/Intersect.tsv", sep = "/")
 
 inter = read.table(file = intersectFile, header = F, sep = "\t")
 
