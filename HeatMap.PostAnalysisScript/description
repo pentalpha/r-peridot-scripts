@@ -1,5 +1,4 @@
 [NAME]	HeatMap
-[EXTERNAL-SCRIPT]	false
 [SCRIPT-NAME]	Heatmap.R
 [MAX-2-CONDITIONS]	false
 [NEEDS-REPLICATES]	false

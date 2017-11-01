@@ -1,5 +1,4 @@
 [NAME]	ClusterProfiler
-[EXTERNAL-SCRIPT]	false
 [SCRIPT-NAME]	clusterProfiler.R
 [MAX-2-CONDITIONS]	false
 [NEEDS-REPLICATES]	false
