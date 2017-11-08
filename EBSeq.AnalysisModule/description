@@ -13,8 +13,8 @@
 [REQUIRED-PARAMETER]	log2FoldChange	Float
 [REQUIRED-PARAMETER]	pValue	Float
 [REQUIRED-PARAMETER]	tops	Integer
-[INFO]	From bioconductor.org:
 [INFO]	EBSeq: An R package for gene and isoform differential expression analysis of RNA-seq data.
 [INFO]	Differential Expression analysis at both gene and isoform level using RNA-seq data.
+[INFO]	EBSeq requires the library size factor for each sample. Here, may be obtained via the function MedianNorm, which reproduces the median normalization approach in DESeq. The function EBTest is used to detect DE genes. sizeFactors is used to define the library size factor of each sample. It could be obtained by summing up the total number of reads within each sample. In conclusion of EBTest function the output is one dataframe with data which will filtered from the defined parameters in R-Peridot.
 [INFO]	Author: Ning Leng, Christina Kendziorski.
 [INFO]	Maintainer: Ning Leng <lengning1 at gmail.com>.

@@ -13,8 +13,8 @@
 [REQUIRED-PARAMETER]	log2FoldChange	Float
 [REQUIRED-PARAMETER]	pValue	Float
 [REQUIRED-PARAMETER]	tops	Integer
-[INFO]	From bioconductor.org:
 [INFO]	edgeR: Empirical Analysis of Digital Gene Expression Data in R.
 [INFO]	Differential expression analysis of RNA-seq expression profiles with biological replication. Implements a range of statistical methodology based on the negative binomial distributions, including empirical Bayes estimation, exact tests, generalized linear models and quasi-likelihood tests. As well as RNA-seq, it be applied to differential signal analysis of other types of genomic data that produce counts, including ChIP-seq, SAGE and CAGE.
+[INFO]	edgeR stores data in a simple list-based data object called a DGEList The main components of a DGEList object are a matrix counts containing the integer counts, the data.frame samples containing information about the samples or libraries, and the optional data.frame genes containing annotation for the genes or genomic features. The second most important technical influence on differential expression is the function calcNormFactors that normalizes for RNA composition by finding a set of scaling factors for the library sizes that minimize the log-fold changes between the samples for most genes. Then estimates a common negative binomial dispersion parameter for a DGE dataset and make a table of results with function topTags which will filtered from the defined parameters in R-Peridot.
 [INFO]	Author: Yunshun Chen <yuchen at wehi.edu.au>, Aaron Lun <alun at wehi.edu.au>, Davis McCarthy <dmccarthy at wehi.edu.au>, Xiaobei Zhou <xiaobei.zhou at uzh.ch>, Mark Robinson <mark.robinson at imls.uzh.ch>, Gordon Smyth <smyth at wehi.edu.au>
 [INFO]	Maintainer: Yunshun Chen <yuchen at wehi.edu.au>, Aaron Lun <alun at wehi.edu.au>, Mark Robinson <mark.robinson at imls.uzh.ch>, Davis McCarthy <dmccarthy at wehi.edu.au>, Gordon Smyth <smyth at wehi.edu.au>
