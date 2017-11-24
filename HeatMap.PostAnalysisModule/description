@@ -7,8 +7,7 @@
 [MANDATORY-RESULT]	HeatMap.png
 [RESULT]	NormalizedCounts.tsv
 [RESULT]	PCA.png
-[RESULT]	aux1.pdf
-[RESULT]	aux2.pdf
+[RESULT]	boxplot-pca-dendrogram.pdf
 [REQUIRED-INPUT-FILE]	VennDiagram.PostAnalysisModule/Intersect.tsv
 [REQUIRED-SCRIPT]	VennDiagram
 [INFO]	HeatMap: Creates a normalized version from the inputfile for the plot of Boxplot and PCA. Then using the results of VennDiagram's "Intersect.tsv" for filtered the normalized inputfile with differential gene expression for a generate Dendogram plot and a Heatmap plot.

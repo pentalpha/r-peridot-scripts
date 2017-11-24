@@ -153,7 +153,7 @@ if(length(inter[,1]) > 6){
   if(PDFheight <= 8) {PDFheight = 10}
   if(PDFwidth <= 8) {PDFwidth = 10}
 
-  pdf(file = paste(outputFilesDir, "aux1.pdf", sep = "/"))
+  pdf(file = paste(outputFilesDir, "boxplot-pca-dendrogram.pdf", sep = "/"))
 
   par(cex.axis=0.8)
 
@@ -167,7 +167,7 @@ if(length(inter[,1]) > 6){
 
   dev.off()
 
-  pdf(file = paste(outputFilesDir, "aux2.pdf", sep = "/"), height = PDFheight, width = PDFwidth)
+  pdf(file = paste(outputFilesDir, "HeatMap.pdf", sep = "/"), height = PDFheight, width = PDFwidth)
 
   heatmap.2(log2(d2), Rowv = as.dendrogram(clusters$genes), Colv = as.dendrogram(clusters$samples), dendrogram = "both", key = T, keysize = 1.4, key.par=list(mar=c(3,1,3,1)), col = greenred(200), scale = "none", trace = "none", cexRow = 0.75, cexCol = 0.9, srtCol = 90, density.info = 'histogram', main = "HeatMap", margins = c(10, 7))
 
