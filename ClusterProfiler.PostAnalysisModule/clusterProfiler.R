@@ -80,8 +80,8 @@ lenDescriptionCharEgo = nchar(max(ego@result$Description))
 lenDescriptionCharEgo2 = nchar(max(ego2@result$Description))
 lenDescriptionCharEgo3 = nchar(max(ego3@result$Description))
 
-height = max(lenCategoryEgo, lenCategoryEgo2, lenCategoryEgo3)
-width = max(lenDescriptionCharEgo, lenDescriptionCharEgo2, lenDescriptionCharEgo3)
+height = max(lenCategoryEgo, lenCategoryEgo2, lenCategoryEgo3, 48, na.rm = T)
+width = max(lenDescriptionCharEgo, lenDescriptionCharEgo2, lenDescriptionCharEgo3, 48, na.rm = T)
 
 if(height/6 <= 8){
   height = 10
