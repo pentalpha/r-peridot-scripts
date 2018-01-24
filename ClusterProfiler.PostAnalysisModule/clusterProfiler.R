@@ -10,7 +10,7 @@ inputFilesDir
 
 outputFilesDir <- args[length(args)-1]
 
-outputFilesDir
+outputFilesDir = getwd()
 
 notFirstRun <- args[length(args)]
 
@@ -19,12 +19,9 @@ options(bitmapType='cairo')
 setwd(localDir)
 
 #Get directory
-paramFile = paste(getwd(), "config.txt", sep = "/")
+paramFile = paste(inputFilesDir, "config.txt", sep = "/")
 params = read.table(paramFile, header = TRUE, row.names = 1, sep = "|")
 params
-
-#Get Temp Diretory
-FileTemp = outputFilesDir
 
 genelistinput = paste(inputFilesDir, "VennDiagram.PostAnalysisModule/Intersect.tsv", sep = "/");
 
@@ -32,6 +29,7 @@ genelist = inter = read.table(file = genelistinput, header = F, sep = "\t")
 
 library(clusterProfiler)
 library(ggplot2)
+
 refOrganism = params$referenceOrganism
 stopifnot(refOrganism == "Human" || refOrganism == "Mouse" || refOrganism == "Fly")
 
@@ -42,17 +40,20 @@ if(refOrganism == "Human"){
   require(org.Hs.eg.db)
   universe = org.Hs.egENSEMBL
   orgDBName = "org.Hs.eg.db"
+  keggOrg = "hsa"
 }else if(refOrganism == "Mouse"){
   require(org.Mm.eg.db)
   universe = org.Mm.egENSEMBL
   orgDBName = "org.Mm.eg.db"
+  keggOrg = "mmu"
 }else if(refOrganism == "Fly"){
   require(org.Dm.eg.db)
   universe = org.Dm.egENSEMBL
   orgDBName = "org.Dm.eg.db"
+  keggOrg = "dme"
 }
 
-eg = bitr(genelist[,1], fromType= as.character(params$idType), toType = c("SYMBOL","ENTREZID", "UNIPROT"), OrgDb = orgDBName, drop = T)
+eg = bitr(gsub("\\..*","",genelist[,1]), fromType= as.character(params$idType), toType = c("SYMBOL","ENTREZID", "UNIPROT"), OrgDb = orgDBName, drop = T)
 
 head(eg$ENTREZID)
 
@@ -102,13 +103,13 @@ if(width/6 <= 8){
 if(length(ego@result$ID) > 0){
   dotplot(ego, title = "Ontology = MF", showCategory = lenCategoryEgo, colorBy = "pvalue")
 
-  ggsave(filename = paste(outputFilesDir, "enrichGOMF.jpg", sep = "/"), width = width, height = height)
+  ggsave(filename = paste(outputFilesDir, "enrichGOMF.png", sep = "/"), width = width, height = height)
 }
 
 if(length(ego2@result$ID) > 0){
   dotplot(ego2, title = "Ontology = CC", showCategory = 100, colorBy = "pvalue")
   
-  ggsave(filename = paste(outputFilesDir, "enrichGOCC.jpg", sep = "/"), width = width, height = height)
+  ggsave(filename = paste(outputFilesDir, "enrichGOCC.png", sep = "/"), width = width, height = height)
 }
 
 if(length(ego3@result$ID) > 0){
@@ -134,9 +135,9 @@ if(length(ego3@result$ID) > 0){
 dev.off()
 
 ##### KEGG #####
-eg2np <- bitr_kegg(eg$ENTREZID, fromType='kegg', toType='ncbi-geneid', organism='mmu')
+eg2np <- bitr_kegg(eg$ENTREZID, fromType='kegg', toType='ncbi-geneid', organism=keggOrg)
 
-kk <- enrichKEGG(eg2np$kegg, organism = 'mmu', pvalueCutoff = 1, qvalueCutoff = 1)
+kk <- enrichKEGG(eg2np$kegg, organism = keggOrg, pvalueCutoff = 1, qvalueCutoff = 1)
 
 kk@result = subset(kk@result, (pvalue < params$pValue & qvalue < params$fdr))
 
@@ -149,7 +150,13 @@ if(length(kk@result$ID) > 0){
 urlPath = vector()
 
 urlPath = sapply(kk@result$ID, function(x){
-  browseKEGG(kk, x)
+  paste0("http://www.kegg.jp/kegg-bin/show_pathway?", x, '/', kk[x, "geneID"])
 })
 
 write.table(x = data.frame(urlPath), file = paste(outputFilesDir, "urlPaths.tsv", sep = "/"), sep = "\t", quote = F)
+
+write.table(x = ego@result[,c(2,8)], file = paste(outputFilesDir, "enrichGOMF.tsv", sep = "/"), sep = "\t", quote = F)
+
+write.table(x = ego2@result[,c(2,8)], file = paste(outputFilesDir, "enrichGOCC.tsv", sep = "/"), sep = "\t", quote = F)
+
+write.table(x = ego3@result[,c(2,8)], file = paste(outputFilesDir, "enrichGOBP.tsv", sep = "/"), sep = "\t", quote = F)
