@@ -1,3 +1,5 @@
+R.Version()
+
 Packages = installed.packages()
 
 Packages = as.data.frame(Packages)
