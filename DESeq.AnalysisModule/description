@@ -13,7 +13,7 @@
 [REQUIRED-PARAMETER]	log2FoldChange	Float
 [REQUIRED-PARAMETER]	pValue	Float
 [REQUIRED-PARAMETER]	tops	Integer
-[PACKAGE] DESeq 1.28.0
+[PACKAGE]	DESeq	1.28.0
 [INFO]	DESeq: Differential gene expression analysis based on the negative binomial distribution.
 [INFO]	Estimate variance-mean dependence in count data from high-throughput sequencing assays and test for differential expression based on a model using the negative binomial distribution
 [INFO]	As a first processing step is to estimate the effective library size from input file. This step is sometimes also called normalisation.

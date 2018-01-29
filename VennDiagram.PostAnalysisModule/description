@@ -5,5 +5,5 @@
 [MANDATORY-RESULT]	Intersect.tsv
 [RESULT]	plots.pdf
 [RESULT]	vennDiagramPlot.png
-[PACKAGE]   limma   3.32.2
+[PACKAGE]	limma	3.32.2
 [INFO]	VennDiagram: Reads the results from all Analysis Modules and creates Intersect.tsv (a spreadsheet file with the intersection of the selected reads) and a Venn Diagram plot these same results.
