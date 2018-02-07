@@ -10,7 +10,7 @@
 [REQUIRED-INPUT-FILE]	condition-input.tsv
 [REQUIRED-INPUT-FILE]	rna-seq-input.tsv
 [REQUIRED-PARAMETER]	fdr	Float
-[REQUIRED-PARAMETER]	log2FoldChange	Float
+[REQUIRED-PARAMETER]	FoldChange	Float
 [REQUIRED-PARAMETER]	pValue	Float
 [REQUIRED-PARAMETER]	tops	Integer
 [PACKAGE]	EBSeq	1.16.0
