@@ -6,6 +6,7 @@ packIsInstalled <- function(s){
   return(s %in% rownames(installed.packages()))
 }
 
+args = commandArgs(trailingOnly = F)
 packageToInstall <- args[length(args)-1]
 repo <- args[length(args)]
 
