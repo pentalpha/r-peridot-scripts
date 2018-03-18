@@ -23,7 +23,7 @@ paramFile = paste(inputFilesDir, "config.txt", sep = "/")
 params = read.table(paramFile, header = TRUE, row.names = 1, sep = "|")
 params
 
-genelistinput = paste(inputFilesDir, "VennDiagram.PostAnalysisModule/Intersect.tsv", sep = "/");
+genelistinput = paste(inputFilesDir, "VennDiagram.PostAnalysisModule/1-Intersect.tsv", sep = "/");
 
 genelist = inter = read.table(file = genelistinput, header = F, sep = "\t")
 

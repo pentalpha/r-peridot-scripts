@@ -201,21 +201,21 @@ peridotPlotVolcano <- function(res, config){
 }
 
 #Call Histogram Plot
-png(filename = paste(outputFilesDir, "histogram.png", sep = "/"), width=600, height=600)
+png(filename = paste(outputFilesDir, "2-histogram.png", sep = "/"), width=600, height=600)
 
 peridotPlotHist(res)
 
 dev.off()
 
 #Call MA Plot
-png(filename = paste(outputFilesDir, "MAPlot.png", sep = "/"), width=600, height=600)
+png(filename = paste(outputFilesDir, "3-MAPlot.png", sep = "/"), width=600, height=600)
 
 peridotPlotMA(res, FileConfig)
 
 dev.off()
 
 #Call Volcano Plot
-png(filename = paste(outputFilesDir, "volcanoPlot.png", sep = "/"), width=600, height=600)
+png(filename = paste(outputFilesDir, "4-volcanoPlot.png", sep = "/"), width=600, height=600)
 
 peridotPlotVolcano(res, FileConfig)
 
@@ -254,11 +254,11 @@ if(FileConfig$tops > 0){
 
 ##Create files csv
 #if(length(resSig$FDR > 0)){
-  write.table(resSig, paste(outputFilesDir, "res.tsv", sep = "/"), sep = "\t")
+  write.table(resSig, paste(outputFilesDir, "1-res.tsv", sep = "/"), sep = "\t")
 #}
 #
 
-pdf(file = paste(outputFilesDir, "plots.pdf", sep = "/"))
+pdf(file = paste(outputFilesDir, "5-plots.pdf", sep = "/"))
 
 #Histogram PValue and FDR
 peridotPlotHist(res)

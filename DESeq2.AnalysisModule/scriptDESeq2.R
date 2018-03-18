@@ -174,19 +174,19 @@ peridotPlotVolcano <- function(res, config){
   }
 }
 
-png(filename = paste(outputFilesDir, "histogram.png", sep = "/"), width=600, height=600)
+png(filename = paste(outputFilesDir, "2-histogram.png", sep = "/"), width=600, height=600)
 
 peridotPlotHist(resFinal)
 
 dev.off()
 
-png(filename = paste(outputFilesDir, "MAPlot.png", sep = "/"), width=600, height=600)
+png(filename = paste(outputFilesDir, "3-MAPlot.png", sep = "/"), width=600, height=600)
 
 peridotPlotMA(resFinal, FileConfig)
 
 dev.off()
 
-png(filename = paste(outputFilesDir, "volcanoPlot.png", sep = "/"), width=600, height=600)
+png(filename = paste(outputFilesDir, "4-volcanoPlot.png", sep = "/"), width=600, height=600)
 
 peridotPlotVolcano(resFinal, FileConfig)
 
@@ -222,10 +222,10 @@ if(FileConfig$tops > 0){
 
 ##Create files csv
 
-write.table(resSig, paste(outputFilesDir, "/res.tsv", sep = ""), sep = "\t")
+write.table(resSig, paste(outputFilesDir, "/1-res.tsv", sep = ""), sep = "\t")
 
 
-pdf(file = paste(outputFilesDir, "plots.pdf", sep = "/"))
+pdf(file = paste(outputFilesDir, "5-plots.pdf", sep = "/"))
 
 #Histogram
 peridotPlotHist(resFinal)

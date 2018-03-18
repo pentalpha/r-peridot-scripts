@@ -27,22 +27,22 @@ setEdgeR = NULL
 setDESeq2 = NULL
 setsSeq = NULL
 
-if(file.exists(paste(inputFilesDir, "/DESeq.AnalysisModule/res.tsv", sep = ""))){
-  setDESeq = read.csv(paste(inputFilesDir, "/DESeq.AnalysisModule/res.tsv", sep = ""), sep = "\t")
+if(file.exists(paste(inputFilesDir, "/DESeq.AnalysisModule/1-res.tsv", sep = ""))){
+  setDESeq = read.csv(paste(inputFilesDir, "/DESeq.AnalysisModule/1-res.tsv", sep = ""), sep = "\t")
 }
 
-if(file.exists(paste(inputFilesDir, "/EBSeq.AnalysisModule/res.tsv", sep = ""))){
-  setEBSeq = read.csv(paste(inputFilesDir, "/EBSeq.AnalysisModule/res.tsv", sep = ""), sep = "\t")
+if(file.exists(paste(inputFilesDir, "/EBSeq.AnalysisModule/1-res.tsv", sep = ""))){
+  setEBSeq = read.csv(paste(inputFilesDir, "/EBSeq.AnalysisModule/1-res.tsv", sep = ""), sep = "\t")
 }
 
-if(file.exists(paste(inputFilesDir, "/edgeR.AnalysisModule/res.tsv", sep = ""))){
-  setEdgeR = read.csv(paste(inputFilesDir, "/edgeR.AnalysisModule/res.tsv", sep = ""), sep = "\t")
+if(file.exists(paste(inputFilesDir, "/edgeR.AnalysisModule/1-res.tsv", sep = ""))){
+  setEdgeR = read.csv(paste(inputFilesDir, "/edgeR.AnalysisModule/1-res.tsv", sep = ""), sep = "\t")
 }
-if(file.exists(paste(inputFilesDir, "/DESeq2.AnalysisModule/res.tsv", sep = ""))){
-  setDESeq2 = read.csv(paste(inputFilesDir, "/DESeq2.AnalysisModule/res.tsv", sep = ""), sep = "\t")
+if(file.exists(paste(inputFilesDir, "/DESeq2.AnalysisModule/1-res.tsv", sep = ""))){
+  setDESeq2 = read.csv(paste(inputFilesDir, "/DESeq2.AnalysisModule/1-res.tsv", sep = ""), sep = "\t")
 }
-if(file.exists(paste(inputFilesDir, "/sSeq.AnalysisModule/res.tsv", sep = ""))){
-  setsSeq = read.csv(paste(inputFilesDir, "/sSeq.AnalysisModule/res.tsv", sep = ""), sep = "\t")
+if(file.exists(paste(inputFilesDir, "/sSeq.AnalysisModule/1-res.tsv", sep = ""))){
+  setsSeq = read.csv(paste(inputFilesDir, "/sSeq.AnalysisModule/1-res.tsv", sep = ""), sep = "\t")
 }
 
 library(limma)
@@ -135,13 +135,13 @@ vCounts[1, length(colnames(vCounts))] = NA
 # Specify the colors for the sets
 cols<-c("Red", "Green", "Blue", "Black", "Pink")
 
-png(filename = paste(outputFilesDir, "/vennDiagramPlot.png", sep = ""), width=600, height=600)
+png(filename = paste(outputFilesDir, "/2-vennDiagramPlot.png", sep = ""), width=600, height=600)
 
 vennDiagram(vCounts, circle.col=cols)
 
 dev.off()
 
-pdf(file = paste(outputFilesDir, "/plots.pdf", sep = ""))
+pdf(file = paste(outputFilesDir, "/3-plots.pdf", sep = ""))
 
 vennDiagram(vCounts, circle.col=cols)
 
@@ -190,7 +190,7 @@ if(length(listSets) > 1){
   interSets = listSets
 }
 
-#write.table(interSets, paste(outputFilesDir, "Intersect.tsv", sep = "/"), sep = "\t", row.names = F, col.names = F)
+#write.table(interSets, paste(outputFilesDir, "1-Intersect.tsv", sep = "/"), sep = "\t", row.names = F, col.names = F)
 
 interUniverse = data.frame(list = universe, packages = interPacks)
 
@@ -200,7 +200,7 @@ ord = apply(interUniverse, 1, function(x){
 
 interUniverse = interUniverse[order(ord, decreasing = T),]
 
-write.table(interUniverse, paste(outputFilesDir, "Intersect.tsv", sep = "/"), sep = "\t", row.names = F, col.names = F)
+write.table(interUniverse, paste(outputFilesDir, "1-Intersect.tsv", sep = "/"), sep = "\t", row.names = F, col.names = F)
 
 ##### INICIO DO chooseGene.R #####
 

@@ -80,7 +80,7 @@ library(pvclust)
 library(gplots)
 
 # Abrir o arquivo de miRNAs achados nos pacotes do R-peridot #
-intersectFile = paste(inputFilesDir, "VennDiagram.PostAnalysisModule/Intersect.tsv", sep = "/")
+intersectFile = paste(inputFilesDir, "VennDiagram.PostAnalysisModule/1-Intersect.tsv", sep = "/")
 
 inter = read.table(file = intersectFile, header = F, sep = "\t")
 
@@ -142,7 +142,7 @@ if(length(inter[,1]) > 6){
     }
   }))
 
-  png(filename = paste(outputFilesDir, "HeatMap.png", sep = "/"), width=600, height=600)
+  png(filename = paste(outputFilesDir, "A-HeatMap.png", sep = "/"), width=600, height=600)
 
   heatmap.2(log2(d2), Rowv = as.dendrogram(clusters$genes), Colv = as.dendrogram(clusters$samples), dendrogram = "both", key = T, keysize = 1.4, key.par=list(mar=c(3,1,3,1)), col = greenred(200), scale = "none", trace = "none", cexRow = 0.1, cexCol = 0.4, srtCol = 90, labRow = "", density.info = 'histogram', main = "HeatMap", margins = c(10, 5))
 
