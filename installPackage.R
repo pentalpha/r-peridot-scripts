@@ -9,7 +9,9 @@ installFromCran <- function(packName){
 }
 
 installFromPeridotRepo <- function(packName, repo){
-  install.packages(packName, dependencies=TRUE, repos=repo)
+  if(repo != "0.0.0.0"){
+    install.packages(packName, dependencies=TRUE, repos=repo)
+  }
 }
 
 packIsInstalled <- function(s){
