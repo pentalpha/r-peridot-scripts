@@ -19,6 +19,9 @@ FileConfigPath = paste(localDir, "config.txt", sep = "/")
 
 #Read file config
 FileConfig = read.table(FileConfigPath, header = TRUE, row.names = 1, sep = "|")
+FileConfig$foldChange;
+FileConfig$pValue;
+FileConfig$fdr;
 
 if(notFirstRun == "0"){
 
@@ -106,24 +109,24 @@ peridotPlotHist <- function(res){
 #MA Plot Function
 peridotPlotMA <- function(res, FileConfig){
   with(res, plot(log(baseMean), log2FoldChange, pch=20, main="MA Plot"))
-  if(FileConfig$FoldChange != 0 & FileConfig$pValue != 0 & FileConfig$fdr != 0){
+  if(FileConfig$foldChange != 0 & FileConfig$pValue != 0 & FileConfig$fdr != 0){
     with(subset(res, 1-FDR<FileConfig$fdr & pval<FileConfig$pValue), points(log(baseMean), log2FoldChange, pch=20, col="red"))
-    abline(h=c(log2(FileConfig$FoldChange), log2(FileConfig$FoldChange)*(-1)), col="blue")
-    legend('bottomright', c(paste("FDR < ", FileConfig$fdr, " & pvalue < ", FileConfig$pValue, sep = ""), paste("log2FoldChange = mod(", round(log2(FileConfig$FoldChange), 3), ")", sep = "")), col = c("red", "blue"), bty = 'o', pch = c(16, NA), lty = c(NA, 1), bg = "white", cex = 0.8)
-  }else if(FileConfig$FoldChange != 0 & FileConfig$pValue != 0){
+    abline(h=c(log2(FileConfig$foldChange), log2(FileConfig$foldChange)*(-1)), col="blue")
+    legend('bottomright', c(paste("FDR < ", FileConfig$fdr, " & pvalue < ", FileConfig$pValue, sep = ""), paste("log2FoldChange = mod(", round(log2(FileConfig$foldChange), 3), ")", sep = "")), col = c("red", "blue"), bty = 'o', pch = c(16, NA), lty = c(NA, 1), bg = "white", cex = 0.8)
+  }else if(FileConfig$foldChange != 0 & FileConfig$pValue != 0){
     with(subset(res, pval<FileConfig$pValue), points(log(baseMean), log2FoldChange, pch=20, col="red"))
-    abline(h=c(log2(FileConfig$FoldChange), log2(FileConfig$FoldChange)*(-1)), col="blue")
-    legend('bottomright', c(paste("pvalue < ", FileConfig$pValue, sep = ""), paste("log2FoldChange = mod(", round(log2(FileConfig$FoldChange), 3), ")", sep = "")), col = c("red", "blue"), bty = 'o', pch = c(16, NA), lty = c(NA, 1), bg = "white", cex = 0.8)
-  }else if(FileConfig$FoldChange != 0 & FileConfig$fdr != 0){
+    abline(h=c(log2(FileConfig$foldChange), log2(FileConfig$foldChange)*(-1)), col="blue")
+    legend('bottomright', c(paste("pvalue < ", FileConfig$pValue, sep = ""), paste("log2FoldChange = mod(", round(log2(FileConfig$foldChange), 3), ")", sep = "")), col = c("red", "blue"), bty = 'o', pch = c(16, NA), lty = c(NA, 1), bg = "white", cex = 0.8)
+  }else if(FileConfig$foldChange != 0 & FileConfig$fdr != 0){
     with(subset(res, 1-FDR<FileConfig$fdr), points(log(baseMean), log2FoldChange, pch=20, col="red"))
-    abline(h=c(log2(FileConfig$FoldChange), log2(FileConfig$FoldChange)*(-1)), col="blue")
-    legend('bottomright', c(paste("FDR < ", FileConfig$fdr, sep = ""), paste("log2FoldChange = mod(", round(log2(FileConfig$FoldChange), 3), ")", sep = "")), col = c("red", "blue"), bty = 'o', pch = c(16, NA), lty = c(NA, 1), bg = "white", cex = 0.8)
+    abline(h=c(log2(FileConfig$foldChange), log2(FileConfig$foldChange)*(-1)), col="blue")
+    legend('bottomright', c(paste("FDR < ", FileConfig$fdr, sep = ""), paste("log2FoldChange = mod(", round(log2(FileConfig$foldChange), 3), ")", sep = "")), col = c("red", "blue"), bty = 'o', pch = c(16, NA), lty = c(NA, 1), bg = "white", cex = 0.8)
   }else if(FileConfig$pValue != 0 & FileConfig$fdr != 0){
     with(subset(res, 1-FDR<FileConfig$fdr & pval<FileConfig$pValue), points(log(baseMean), log2FoldChange, pch=20, col="red"))
     legend('bottomright', paste("FDR < ", FileConfig$fdr, " & pvalue < ", FileConfig$pValue, sep = ""), col = "red", bty = 'o', pch = 16, bg = "white", cex = 0.8)
-  }else if(FileConfig$FoldChange != 0){
-    abline(h=c(log2(FileConfig$FoldChange), log2(FileConfig$FoldChange)*(-1)), col="blue")
-    legend('bottomright', paste("log2FoldChange = mod(", round(log2(FileConfig$FoldChange), 3), ")", sep = ""), col = "blue", bty = 'o', lty = 1, bg = "white", cex = 0.8)
+  }else if(FileConfig$foldChange != 0){
+    abline(h=c(log2(FileConfig$foldChange), log2(FileConfig$foldChange)*(-1)), col="blue")
+    legend('bottomright', paste("log2FoldChange = mod(", round(log2(FileConfig$foldChange), 3), ")", sep = ""), col = "blue", bty = 'o', lty = 1, bg = "white", cex = 0.8)
   }else if(FileConfig$pValue != 0){
     with(subset(res, pval<FileConfig$pValue), points(log(baseMean), log2FoldChange, pch=20, col="red"))
     legend('bottomright', paste("pvalue < ", FileConfig$pValue, sep = ""), col = "red", bty = 'o', pch = 16, bg = "white", cex = 0.8)
@@ -136,25 +139,24 @@ peridotPlotMA <- function(res, FileConfig){
 #Volcano Plot Function
 peridotPlotVolcano <- function(res, FileConfig){
   with(res, plot(log2FoldChange, -log10(pval), pch=20, main="Volcano plot"))
-
-  if(FileConfig$FoldChange != 0 & FileConfig$pValue != 0 & FileConfig$fdr != 0){
+  if(FileConfig$foldChange != 0 & FileConfig$pValue != 0 & FileConfig$fdr != 0){
     with(subset(res, 1-FDR<FileConfig$fdr & pval<FileConfig$pValue), points(log2FoldChange, -log10(pval), pch=20, col="red"))
-    abline(v=c(log2(FileConfig$FoldChange), log2(FileConfig$FoldChange)*(-1)), col="blue")
-    legend('topleft', c(paste("FDR(padj) < ", FileConfig$fdr, " & pvalue < ", FileConfig$pValue, sep = ""), paste("log2FoldChange = mod(", round(log2(FileConfig$FoldChange), 3), ")", sep = "")), col = c("red", "blue"), bty = 'o', pch = c(16, NA), lty = c(NA, 1), bg = "white", cex = 0.8)
-  }else if(FileConfig$FoldChange != 0 & FileConfig$pValue != 0){
+    abline(v=c(log2(FileConfig$foldChange), log2(FileConfig$foldChange)*(-1)), col="blue")
+    legend('topleft', c(paste("FDR(padj) < ", FileConfig$fdr, " & pvalue < ", FileConfig$pValue, sep = ""), paste("log2FoldChange = mod(", round(log2(FileConfig$foldChange), 3), ")", sep = "")), col = c("red", "blue"), bty = 'o', pch = c(16, NA), lty = c(NA, 1), bg = "white", cex = 0.8)
+  }else if(FileConfig$foldChange != 0 & FileConfig$pValue != 0){
     with(subset(res, pval<FileConfig$pValue), points(log2FoldChange, -log10(pval), pch=20, col="red"))
-    abline(v=c(log2(FileConfig$FoldChange), log2(FileConfig$FoldChange)*(-1)), col="blue")
-    legend('topleft', c(paste("pvalue < ", FileConfig$pValue, sep = ""), paste("log2FoldChange = mod(", round(log2(FileConfig$FoldChange), 3), ")", sep = "")), col = c("red", "blue"), bty = 'o', pch = c(16, NA), lty = c(NA, 1), bg = "white", cex = 0.8)
-  }else if(FileConfig$FoldChange != 0 & FileConfig$fdr != 0){
+    abline(v=c(log2(FileConfig$foldChange), log2(FileConfig$foldChange)*(-1)), col="blue")
+    legend('topleft', c(paste("pvalue < ", FileConfig$pValue, sep = ""), paste("log2FoldChange = mod(", round(log2(FileConfig$foldChange), 3), ")", sep = "")), col = c("red", "blue"), bty = 'o', pch = c(16, NA), lty = c(NA, 1), bg = "white", cex = 0.8)
+  }else if(FileConfig$foldChange != 0 & FileConfig$fdr != 0){
     with(subset(res, 1-FDR<FileConfig$fdr), points(log2FoldChange, -log10(pval), pch=20, col="red"))
-    abline(v=c(log2(FileConfig$FoldChange), log2(FileConfig$FoldChange)*(-1)), col="blue")
-    legend('topleft', c(paste("FDR(padj) < ", FileConfig$fdr, sep = ""), paste("log2FoldChange = mod(", round(log2(FileConfig$FoldChange), 3), ")", sep = "")), col = c("red", "blue"), bty = 'o', pch = c(16, NA), lty = c(NA, 1), bg = "white", cex = 0.8)
+    abline(v=c(log2(FileConfig$foldChange), log2(FileConfig$foldChange)*(-1)), col="blue")
+    legend('topleft', c(paste("FDR(padj) < ", FileConfig$fdr, sep = ""), paste("log2FoldChange = mod(", round(log2(FileConfig$foldChange), 3), ")", sep = "")), col = c("red", "blue"), bty = 'o', pch = c(16, NA), lty = c(NA, 1), bg = "white", cex = 0.8)
   }else if(FileConfig$pValue != 0 & FileConfig$fdr != 0){
     with(subset(res, 1-FDR<FileConfig$fdr & pval<FileConfig$pValue), points(log2FoldChange, -log10(pval), pch=20, col="red"))
     legend('topleft', paste("FDR(padj) < ", FileConfig$fdr, " & pvalue < ", FileConfig$pValue, sep = ""), col = "red", bty = 'o', pch = 16, bg = "white", cex = 0.8)
-  }else if(FileConfig$FoldChange != 0){
-    abline(v=c(log2(FileConfig$FoldChange), log2(FileConfig$FoldChange)*(-1)), col="blue")
-    legend('topleft', paste("log2FoldChange = mod(", round(log2(FileConfig$FoldChange), 3), ")", sep = ""), col = "blue", bty = 'o', lty = 1, bg = "white", cex = 0.8)
+  }else if(FileConfig$foldChange != 0){
+    abline(v=c(log2(FileConfig$foldChange), log2(FileConfig$foldChange)*(-1)), col="blue")
+    legend('topleft', paste("log2FoldChange = mod(", round(log2(FileConfig$foldChange), 3), ")", sep = ""), col = "blue", bty = 'o', lty = 1, bg = "white", cex = 0.8)
   }else if(FileConfig$pValue != 0){
     with(subset(res, pval<FileConfig$pValue), points(log2FoldChange, -log10(pval), pch=20, col="red"))
     legend('topleft', paste("pvalue < ", FileConfig$pValue, sep = ""), col = "red", bty = 'o', pch = 16, bg = "white", cex = 0.8)
@@ -183,16 +185,16 @@ peridotPlotVolcano(res, FileConfig)
 dev.off()
 
 #Subset com PValue < FileConfig$pValue, Fold Change < FileConfig$log2FoldChange e FDR < FileConfig$fdr
-if(FileConfig$FoldChange != 0 & FileConfig$pValue != 0 & FileConfig$fdr != 0){
-  resSig = subset(res, abs(log2FoldChange) > log2(FileConfig$FoldChange) & pval <FileConfig$pValue & 1-FDR < FileConfig$fdr)
-}else if(FileConfig$FoldChange != 0 & FileConfig$pValue != 0){
-  resSig = subset(res, abs(log2FoldChange) > log2(FileConfig$FoldChange) & pval <FileConfig$pValue)
-}else if(FileConfig$FoldChange != 0 & FileConfig$fdr != 0){
-  resSig = subset(res, abs(log2FoldChange) > log2(FileConfig$FoldChange) & 1-FDR < FileConfig$fdr)
+if(FileConfig$foldChange != 0 & FileConfig$pValue != 0 & FileConfig$fdr != 0){
+  resSig = subset(res, abs(log2FoldChange) > log2(FileConfig$foldChange) & pval <FileConfig$pValue & 1-FDR < FileConfig$fdr)
+}else if(FileConfig$foldChange != 0 & FileConfig$pValue != 0){
+  resSig = subset(res, abs(log2FoldChange) > log2(FileConfig$foldChange) & pval <FileConfig$pValue)
+}else if(FileConfig$foldChange != 0 & FileConfig$fdr != 0){
+  resSig = subset(res, abs(log2FoldChange) > log2(FileConfig$foldChange) & 1-FDR < FileConfig$fdr)
 }else if(FileConfig$pValue != 0 & FileConfig$fdr != 0){
   resSig = subset(res, pval <FileConfig$pValue & 1-FDR < FileConfig$fdr)
-}else if(FileConfig$FoldChange != 0){
-  resSig = subset(res, abs(log2FoldChange) > log2(FileConfig$FoldChange))
+}else if(FileConfig$foldChange != 0){
+  resSig = subset(res, abs(log2FoldChange) > log2(FileConfig$foldChange))
 }else if(FileConfig$pValue != 0){
   resSig = subset(res, pval <FileConfig$pValue)
 }else if(FileConfig$fdr != 0){
