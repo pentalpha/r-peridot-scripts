@@ -10,11 +10,12 @@ inputFilesDir
 
 outputFilesDir <- args[length(args)-1]
 
-outputFilesDir = getwd()
+outputFilesDir
 
 notFirstRun <- args[length(args)]
 
 notFirstRun
+
 options(bitmapType='cairo')
 setwd(localDir)
 
