@@ -5,8 +5,8 @@
 [MANDATORY-RESULT]	enrich.pdf
 [RESULT]	KEGG_GO.jpg
 [RESULT]	enrichGOBP.jpg
-[RESULT]	enrichGOCC.jpg
-[RESULT]	enrichGOMF.jpg
+[RESULT]	enrichGOCC.png
+[RESULT]	enrichGOMF.png
 [REQUIRED-INPUT-FILE]	VennDiagram.PostAnalysisModule/1-Intersect.tsv
 [REQUIRED-SCRIPT]	VennDiagram
 [REQUIRED-PARAMETER]	fdr	Float
