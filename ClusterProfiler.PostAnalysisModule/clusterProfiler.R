@@ -19,7 +19,7 @@ options(bitmapType='cairo')
 setwd(localDir)
 
 #Get directory
-paramFile = paste(inputFilesDir, "config.txt", sep = "/")
+paramFile = paste(localDir, "config.txt", sep = "/")
 params = read.table(paramFile, header = TRUE, row.names = 1, sep = "|")
 params
 
