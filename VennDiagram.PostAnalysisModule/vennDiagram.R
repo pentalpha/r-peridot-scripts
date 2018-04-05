@@ -38,9 +38,11 @@ if(file.exists(paste(inputFilesDir, "/EBSeq.AnalysisModule/1-res.tsv", sep = "")
 if(file.exists(paste(inputFilesDir, "/edgeR.AnalysisModule/1-res.tsv", sep = ""))){
   setEdgeR = read.csv(paste(inputFilesDir, "/edgeR.AnalysisModule/1-res.tsv", sep = ""), sep = "\t")
 }
+
 if(file.exists(paste(inputFilesDir, "/DESeq2.AnalysisModule/1-res.tsv", sep = ""))){
   setDESeq2 = read.csv(paste(inputFilesDir, "/DESeq2.AnalysisModule/1-res.tsv", sep = ""), sep = "\t")
 }
+
 if(file.exists(paste(inputFilesDir, "/sSeq.AnalysisModule/1-res.tsv", sep = ""))){
   setsSeq = read.csv(paste(inputFilesDir, "/sSeq.AnalysisModule/1-res.tsv", sep = ""), sep = "\t")
 }
@@ -63,35 +65,35 @@ if(!is.null(set1)){
   ncol <- ncol + 1
   colset1 = ncol
   names <- c(names, "DESeq")
-  alias <- c(alias, "D")
+  alias <- c(alias, "DESeq")
 }
 if(!is.null(set2)){
   sets <- c(sets, set2)
   ncol <- ncol + 1
   colset2 = ncol
   names <- c(names, "EBSeq")
-  alias <- c(alias, "EB")
+  alias <- c(alias, "EBSeq")
 }
 if(!is.null(set3)){
   sets <- c(sets, set3)
   ncol <- ncol + 1
   colset3 = ncol
   names <- c(names, "edgeR")
-  alias <- c(alias, "ER")
+  alias <- c(alias, "edgeR")
 }
 if(!is.null(set4)){
   sets <- c(sets, set4)
   ncol <- ncol + 1
   colset4 = ncol
   names <- c(names, "DESeq2")
-  alias <- c(alias, "D2")
+  alias <- c(alias, "DESeq2")
 }
 if(!is.null(set5)){
   sets <- c(sets, set5)
   ncol <- ncol + 1
   colset5 = ncol
   names <- c(names, "sSeq")
-  alias <- c(alias, "S")
+  alias <- c(alias, "sSeq")
 }
 
 # What are the possible letters in the universe?
@@ -200,7 +202,10 @@ ord = apply(interUniverse, 1, function(x){
 
 interUniverse = interUniverse[order(ord, decreasing = T),]
 
-write.table(interUniverse, paste(outputFilesDir, "1-Intersect.tsv", sep = "/"), sep = "\t", row.names = F, col.names = F)
+colnames(interUniverse) <- c('id', 'packs')
+colnames(interUniverse)
+
+write.table(interUniverse, paste(outputFilesDir, "1-Intersect.tsv", sep = "/"), sep = "\t", row.names = F, col.names = T)
 
 ##### INICIO DO chooseGene.R #####
 
