@@ -2,8 +2,8 @@ R.Version()
 
 Packages = installed.packages()
 
-Packages = as.data.frame(Packages)
+Packages = as.data.frame(Packages, row.names = FALSE)
 
-Packages = Packages[,c(1,3)]
+onlyNamesAndVersion = Packages[,c(1,3)]
 
-Packages
+onlyNamesAndVersion
