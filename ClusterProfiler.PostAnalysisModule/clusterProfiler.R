@@ -61,15 +61,15 @@ mappedGenes = mappedkeys(universe)
 
 ego = enrichGO(gene = eg$ENTREZID, universe = mappedGenes, OrgDb = orgDBName, ont = "MF", readable = T, pAdjustMethod = "BH", pvalueCutoff  = 1, qvalueCutoff = 1)
 ego@result = subset(ego@result, (pvalue < params$pValue & qvalue < params$fdr))
-head(ego)
+head(ego@result)
 
 ego2 = enrichGO(gene = eg$ENTREZID, universe = mappedGenes, OrgDb = orgDBName, ont = "CC", readable = T, pAdjustMethod = "BH", pvalueCutoff  = 1, qvalueCutoff = 1)
 ego2@result = subset(ego2@result, (pvalue < params$pValue & qvalue < params$fdr))
-head(ego2)
+head(ego2@result)
 
 ego3 = enrichGO(gene = eg$ENTREZID, universe = mappedGenes, OrgDb = orgDBName, ont = "BP", readable = T, pAdjustMethod = "BH", pvalueCutoff  = 1, qvalueCutoff = 1)
 ego3@result = subset(ego3@result, (pvalue < params$pValue & qvalue < params$fdr))
-head(ego3)
+head(ego3@result)
 
 #Length of the number of Category
 lenCategoryEgo = length(ego@result$ID)
@@ -77,9 +77,9 @@ lenCategoryEgo2 = length(ego2@result$ID)
 lenCategoryEgo3 = length(ego3@result$ID)
 
 #Length of the number of chars of description
-lenDescriptionCharEgo = nchar(max(ego@result$Description))
-lenDescriptionCharEgo2 = nchar(max(ego2@result$Description))
-lenDescriptionCharEgo3 = nchar(max(ego3@result$Description))
+lenDescriptionCharEgo = ifelse(lenCategoryEgo > 0, max(sapply(ego@result$Description, nchar)), 0)
+lenDescriptionCharEgo2 = ifelse(lenCategoryEgo2 > 0, max(sapply(ego2@result$Description, nchar)), 0)
+lenDescriptionCharEgo3 = ifelse(lenCategoryEgo3 > 0, max(sapply(ego3@result$Description, nchar)), 0)
 
 height = max(lenCategoryEgo, lenCategoryEgo2, lenCategoryEgo3, 48, na.rm = T)
 width = max(lenDescriptionCharEgo, lenDescriptionCharEgo2, lenDescriptionCharEgo3, 48, na.rm = T)
@@ -155,8 +155,8 @@ urlPath = sapply(kk@result$ID, function(x){
 
 write.table(x = data.frame(urlPath), file = paste(outputFilesDir, "urlPaths.tsv", sep = "/"), sep = "\t", quote = F)
 
-write.table(x = ego@result[,c(2,8)], file = paste(outputFilesDir, "enrichGOMF.tsv", sep = "/"), sep = "\t", quote = F)
+write.table(x = ego@result, file = paste(outputFilesDir, "enrichGOMF.tsv", sep = "/"), sep = "\t", quote = F)
 
-write.table(x = ego2@result[,c(2,8)], file = paste(outputFilesDir, "enrichGOCC.tsv", sep = "/"), sep = "\t", quote = F)
+write.table(x = ego2@result, file = paste(outputFilesDir, "enrichGOCC.tsv", sep = "/"), sep = "\t", quote = F)
 
-write.table(x = ego3@result[,c(2,8)], file = paste(outputFilesDir, "enrichGOBP.tsv", sep = "/"), sep = "\t", quote = F)
+write.table(x = ego3@result, file = paste(outputFilesDir, "enrichGOBP.tsv", sep = "/"), sep = "\t", quote = F)

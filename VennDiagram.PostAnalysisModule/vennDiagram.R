@@ -195,12 +195,12 @@ if(length(listSets) > 1){
 interUniverse = data.frame(list = universe, packages = interPacks)
 
 ord = apply(interUniverse, 1, function(x){
-  nchar(x[2])
+  print(nchar(x[2]))
 })
 
 interUniverse = interUniverse[order(ord, decreasing = T),]
 
-write.table(interUniverse, paste(outputFilesDir, "Intersect.tsv", sep = "/"), sep = "\t", row.names = F, col.names = F)
+write.table(interUniverse, paste(outputFilesDir, "IntersectGeneList.tsv", sep = "/"), sep = "\t", row.names = F, col.names = F)
 
 ##### INICIO DO chooseGene.R #####
 
@@ -233,7 +233,6 @@ peridotCountTable = as.data.frame(lapply(peridotCountTable, function(x) (x/sum(x
 rownames(peridotCountTable) = geneNames
 
 # Plot normalized counts for each differentially expressed gene
-dir.create(file.path(outputFilesDir, 'countPlots'))
 apply(X = as.data.frame(interUniverse[,1]), MARGIN = 1, FUN = function(x){
   png(filename = paste(outputFilesDir, "/countPlots/", x, ".png", sep = ""), width = 600, height = 600)
   

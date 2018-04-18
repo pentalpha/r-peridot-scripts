@@ -45,8 +45,12 @@ for(i in colnames(peridotCountTable)){
 peridotConditions = droplevels(peridotConditions)
 peridotConditions
 
+rld = log2(peridotCountTable+0.99)
+
+cor = cor(as.matrix(rld))
+
 # Normalizar o dado de entrada #
-peridotCountTable = as.data.frame(lapply(peridotCountTable, function(x) (x/sum(x))*10000000))
+peridotCountTable = as.data.frame(lapply(peridotCountTable, function(x) (x/sum(x))*1000000))
 
 rownames(peridotCountTable) = geneNames
 
@@ -79,6 +83,8 @@ library(pvclust)
 
 library(gplots)
 
+library(RColorBrewer)
+
 # Abrir o arquivo de miRNAs achados nos pacotes do R-peridot #
 intersectFile = paste(inputFilesDir, "VennDiagram.PostAnalysisModule/Intersect.tsv", sep = "/")
 
@@ -93,7 +99,7 @@ pca = prcomp(tperidot)
 
 png(filename = paste(outputFilesDir, "PCA.png", sep = "/"), width=600, height=600)
 
-plot(pca$x[,1], pca$x[,2], xlab="PCA 1", ylab="PCA 2",type="p", pch=19, col=color.code[peridotConditions$condition] , cex=1.0, xlim=c(min(pca$x[,1])*1.1, max(pca$x[,1])*1.1), ylim=c(min(pca$x[,2]*1.1), max(pca$x[,2])*1.1), main = "All Samples TCGA vs mirBase")
+plot(pca$x[,1], pca$x[,2], xlab="PCA 1", ylab="PCA 2",type="p", pch=19, col=color.code[peridotConditions$condition] , cex=1.0, xlim=c(min(pca$x[,1])*1.1, max(pca$x[,1])*1.1), ylim=c(min(pca$x[,2]*1.1), max(pca$x[,2])*1.1), main = "PCA")
 
 text(pca$x[,1] -4,pca$x[,2]-1, rownames(tperidot),cex=0.7, pos = 1)
 
@@ -127,25 +133,90 @@ if(length(inter[,1]) > 6){
   plot(d.pv)
 
   dev.off()
-
-  clusters = list()
-
-  clusters$samples = hclust(dist(t(d)))
-
-  clusters$genes = hclust(dist(d))
-
+  
+  z = t(scale(t(d)))
+  
+  hclustfunc = function(x) hclust(x, method = "complete")
+  
+  distfunc = function(x) dist(x, method = "maximum")
+  
+  cols = c("dodgerblue3", "firebrick3")[peridotConditions$condition]
+  
   d2 = as.matrix(apply(d, c(1,2), function(x){
     if(x == 0){
-      x = 1
+      x = 0.01
     }else{
       x = x
     }
   }))
 
-  png(filename = paste(outputFilesDir, "HeatMap.png", sep = "/"), width=600, height=600)
+  peridotPar <- function(){
+    par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE)
+    
+    plot(0, 0, type = "n", bty = "n", xaxt = "n", yaxt = "n")
+  }
+  
+  
+  png(filename = paste(outputFilesDir, "HeatMapScale.png", sep = "/"), width=600, height=600)
 
-  heatmap.2(log2(d2), Rowv = as.dendrogram(clusters$genes), Colv = as.dendrogram(clusters$samples), dendrogram = "both", key = T, keysize = 1.4, key.par=list(mar=c(3,1,3,1)), col = greenred(200), scale = "none", trace = "none", cexRow = 0.1, cexCol = 0.4, srtCol = 90, labRow = "", density.info = 'histogram', main = "HeatMap", margins = c(10, 5))
-
+  heatmap.2(z, hclustfun = hclustfunc, distfun = distfunc, dendrogram = "both", key = T, keysize = 1.4,
+            key.par=list(cex=0.5), col = greenred(200), scale = "row", trace = "none", cexCol = 0.7, srtCol = 90,
+            density.info = 'histogram', main = "R-Peridot: HeatMap", labRow = "", margins = c(10,7),
+            ColSideColors = cols)
+  
+  peridotPar()
+  
+  legend("bottomleft",      # location of the legend on the heatmap plot
+         legend = levels(peridotConditions$condition), # category labels
+         col = levels(as.factor(cols)),  # color key
+         lty= 1,             # line style
+         lwd = 8            # line width
+  )
+  
+  dev.off()
+  
+  png(filename = paste(outputFilesDir, "HeatMapCor.png", sep = "/"), width=600, height=600)
+  
+  heatmap.2(cor, symm = T, col = colorRampPalette(c("darkblue", "white"))(100),
+            labCol = colnames(cor), labRow = colnames(cor),
+            distfun = function(c) as.dist(1 - c), trace = "none", Colv = T,
+            cexRow = 0.9, cexCol = 0.9, key = F, font = 2, RowSideColors = cols,
+            ColSideColors = cols, main = "R-Peridot: Samples correlation Heatmap", margins = c(10,8))
+  
+  peridotPar()
+  
+  legend("bottomleft",      # location of the legend on the heatmap plot
+         legend = levels(peridotConditions$condition), # category labels
+         col = levels(as.factor(cols)),  # color key
+         lty= 1,             # line style
+         lwd = 8            # line width
+  )
+  
+  dev.off()
+  
+  png(filename = paste(outputFilesDir, "HeatMapLog2.png", sep = "/"), width=600, height=600)
+  
+  sig.dat = rld[subInter,]
+  
+  annC = data.frame(condition=peridotConditions)
+  
+  rownames(annC) = colnames(sig.dat)
+  
+  heatmap.2(as.matrix(sig.dat), scale = "row", trace = "none", margins = c(10, 8), 
+            col = colorRampPalette(rev(brewer.pal(n = 7, name = "RdBu")))(256), 
+            cexRow = 0.9, cexCol = 0.9, key = T, keysize = 1.4, key.par=list(cex=0.5), 
+            offsetRow = T, offsetCol = T,reorderfun = function(d,w) reorder(d,w, agglo.FUN = mean), 
+            main = expression(R-Peridot: ~ log[2] ~ (Count ~ reads + 0.99) ~ Heatmap), lhei = c(2,PDFheight/2), lwid = c(2,PDFwidth/2), ColSideColors = cols)
+  
+  peridotPar()
+  
+  legend("bottomleft",      # location of the legend on the heatmap plot
+         legend = levels(peridotConditions$condition), # category labels
+         col = levels(as.factor(cols)),  # color key
+         lty= 1,             # line style
+         lwd = 8            # line width
+  )
+  
   dev.off()
 
   PDFheight = nrow(d)/8
@@ -168,10 +239,59 @@ if(length(inter[,1]) > 6){
   dev.off()
 
   pdf(file = paste(outputFilesDir, "HeatMap.pdf", sep = "/"), height = PDFheight, width = PDFwidth)
+  
+  #### HeatMap 1 ####
+  
+  heatmap.2(cor, symm = T, col = colorRampPalette(c("darkblue", "white"))(100),
+            labCol = colnames(cor), labRow = colnames(cor),
+            distfun = function(c) as.dist(1 - c), trace = "none", Colv = T,
+            cexRow = 0.9, cexCol = 0.9, key = F, font = 2, RowSideColors = cols,
+            ColSideColors = cols, main = "R-Peridot: Samples correlation Heatmap", margins = c(10,8))
+  
+  peridotPar()
+  
+  legend("bottomleft",      # location of the legend on the heatmap plot
+         legend = levels(peridotConditions$condition), # category labels
+         col = levels(as.factor(cols)),  # color key
+         lty= 1,             # line style
+         lwd = 8            # line width
+  )
+  
+  #### HeatMap 2 ####
 
-  heatmap.2(log2(d2), Rowv = as.dendrogram(clusters$genes), Colv = as.dendrogram(clusters$samples), dendrogram = "both", key = T, keysize = 1.4, key.par=list(mar=c(3,1,3,1)), col = greenred(200), scale = "none", trace = "none", cexRow = 0.75, cexCol = 0.9, srtCol = 90, density.info = 'histogram', main = "HeatMap", margins = c(10, 7))
-
+  heatmap.2(as.matrix(sig.dat), scale = "row", trace = "none", margins = c(10, 8), 
+            col = colorRampPalette(rev(brewer.pal(n = 7, name = "RdBu")))(256), 
+            cexRow = 0.9, cexCol = 0.9, key = T, keysize = 1.4, key.par=list(cex=0.5), 
+            offsetRow = T, offsetCol = T,reorderfun = function(d,w) reorder(d,w, agglo.FUN = mean), 
+            main = expression(R-Peridot: ~ log[2] ~ (Count ~ reads + 0.99) ~ Heatmap), lhei = c(2,PDFheight/2), lwid = c(2,PDFwidth/2), ColSideColors = cols)
+  
+  peridotPar()
+  
+  legend("bottomleft",      # location of the legend on the heatmap plot
+         legend = levels(peridotConditions$condition), # category labels
+         col = levels(as.factor(cols)),  # color key
+         lty= 1,             # line style
+         lwd = 8            # line width
+  )
+  
+  #### HeatMap 3 ####
+  heatmap.2(z, hclustfun = hclustfunc, distfun = distfunc, dendrogram = "both", key = T, keysize = 1.4, 
+            key.par=list(mar=c(3,1,3,1)), col = greenred(200), scale = "row", trace = "none", cexRow = 0.75, cexCol = 0.9, srtCol = 90, 
+            density.info = 'histogram', main = "R-Peridot: Scale(Count Reads) Heatmap", margins = c(10, 8),
+            lhei = c(2,PDFheight/2), lwid = c(2,PDFwidth/2), ColSideColors = cols)
+  
+  peridotPar()
+  
+  legend("bottomleft",      # location of the legend on the heatmap plot
+         legend = levels(peridotConditions$condition), # category labels
+         col = levels(as.factor(cols)),  # color key
+         lty= 1,             # line style
+         lwd = 8            # line width
+  )
+  
   dev.off()
 
   #system(paste("pdfunite", paste(outputFilesDir, "aux1.pdf", sep = "/"), paste(outputFilesDir, "aux2.pdf", sep = "/"), paste(outputFilesDir, "HeatMap.pdf", sep = "/"), sep = " "), wait = T)
+}else{
+  stop("Number of results less than 6")
 }

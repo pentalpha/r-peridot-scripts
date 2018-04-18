@@ -2,7 +2,7 @@
 [SCRIPT-NAME]	vennDiagram.R
 [MAX-2-CONDITIONS]	false
 [NEEDS-REPLICATES]	false
-[MANDATORY-RESULT]	Intersect.tsv
+[MANDATORY-RESULT]	IntersectGeneList.tsv
 [RESULT]	plots.pdf
 [RESULT]	vennDiagramPlot.png
 [PACKAGE]	limma	3.32.2

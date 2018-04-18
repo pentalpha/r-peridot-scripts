@@ -15,9 +15,9 @@
 [REQUIRED-PARAMETER]	referenceOrganism	Organism
 [PACKAGE]	clusterProfiler	3.4.2
 [PACKAGE]	ggplot2	2.2.1
-[PACKAGE]	org.Hs.eg.db	3.4.1
-[PACKAGE]	org.Mm.eg.db	3.4.1
-[PACKAGE]	org.Dm.eg.db	3.4.1
+[PACKAGE]	org.Hs.eg.db 3.4.1
+[PACKAGE]	org.Mm.eg.db 3.4.1
+[PACKAGE]	org.Dm.eg.db 3.4.1
 [INFO]	ClusterProfiler: Statistical analysis and visualization of functional profiles for genes and gene clusters.
 [INFO]	This package implements methods to analyze and visualize functional profiles (GO and KEGG) of gene and gene clusters.
 [INFO]	With the list of genes of results of VennDiagram's "Intersect.tsv" generates plots from the "MF", "CC" and "BP" ontologys and the ontology from the KEGG.
