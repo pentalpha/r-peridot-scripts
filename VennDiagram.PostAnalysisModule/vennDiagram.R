@@ -237,6 +237,7 @@ peridotCountTable = as.data.frame(lapply(peridotCountTable, function(x) (x/sum(x
 rownames(peridotCountTable) = geneNames
 
 # Plot normalized counts for each differentially expressed gene
+dir.create(file.path(outputFilesDir, 'countPlots'))
 apply(X = as.data.frame(interUniverse[,1]), MARGIN = 1, FUN = function(x){
   png(filename = paste(outputFilesDir, "/countPlots/", x, ".png", sep = ""), width = 600, height = 600)
   
