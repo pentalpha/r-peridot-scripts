@@ -86,7 +86,7 @@ library(gplots)
 library(RColorBrewer)
 
 # Abrir o arquivo de miRNAs achados nos pacotes do R-peridot #
-intersectFile = paste(inputFilesDir, "VennDiagram.PostAnalysisModule/Intersect.tsv", sep = "/")
+intersectFile = paste(inputFilesDir, "VennDiagram.PostAnalysisModule/1-Intersect.tsv", sep = "/")
 
 inter = read.table(file = intersectFile, header = F, sep = "\t")
 
@@ -149,7 +149,7 @@ if(length(inter[,1]) > 6){
       x = x
     }
   }))
-
+  
   peridotPar <- function(){
     par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE)
     
@@ -157,7 +157,7 @@ if(length(inter[,1]) > 6){
   }
   
   
-  png(filename = paste(outputFilesDir, "HeatMapScale.png", sep = "/"), width=600, height=600)
+  png(filename = paste(outputFilesDir, "A-HeatMapScale.png", sep = "/"), width=600, height=600)
 
   heatmap.2(z, hclustfun = hclustfunc, distfun = distfunc, dendrogram = "both", key = T, keysize = 1.4,
             key.par=list(cex=0.5), col = greenred(200), scale = "row", trace = "none", cexCol = 0.7, srtCol = 90,
@@ -175,7 +175,7 @@ if(length(inter[,1]) > 6){
   
   dev.off()
   
-  png(filename = paste(outputFilesDir, "HeatMapCor.png", sep = "/"), width=600, height=600)
+  png(filename = paste(outputFilesDir, "B-HeatMapCor.png", sep = "/"), width=600, height=600)
   
   heatmap.2(cor, symm = T, col = colorRampPalette(c("darkblue", "white"))(100),
             labCol = colnames(cor), labRow = colnames(cor),
@@ -194,7 +194,7 @@ if(length(inter[,1]) > 6){
   
   dev.off()
   
-  png(filename = paste(outputFilesDir, "HeatMapLog2.png", sep = "/"), width=600, height=600)
+  png(filename = paste(outputFilesDir, "C-HeatMapLog2.png", sep = "/"), width=600, height=600)
   
   sig.dat = rld[subInter,]
   
@@ -216,7 +216,7 @@ if(length(inter[,1]) > 6){
          lty= 1,             # line style
          lwd = 8            # line width
   )
-  
+
   dev.off()
 
   PDFheight = nrow(d)/8

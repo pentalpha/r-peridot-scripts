@@ -10,20 +10,21 @@ inputFilesDir
 
 outputFilesDir <- args[length(args)-1]
 
-outputFilesDir = getwd()
+outputFilesDir
 
 notFirstRun <- args[length(args)]
 
 notFirstRun
+
 options(bitmapType='cairo')
 setwd(localDir)
 
 #Get directory
-paramFile = paste(inputFilesDir, "config.txt", sep = "/")
+paramFile = paste(localDir, "config.txt", sep = "/")
 params = read.table(paramFile, header = TRUE, row.names = 1, sep = "|")
 params
 
-genelistinput = paste(inputFilesDir, "VennDiagram.PostAnalysisModule/Intersect.tsv", sep = "/");
+genelistinput = paste(inputFilesDir, "VennDiagram.PostAnalysisModule/1-Intersect.tsv", sep = "/");
 
 genelist = inter = read.table(file = genelistinput, header = F, sep = "\t")
 
