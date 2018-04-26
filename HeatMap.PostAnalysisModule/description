@@ -2,14 +2,16 @@
 [SCRIPT-NAME]	Heatmap.R
 [MAX-2-CONDITIONS]	false
 [NEEDS-REPLICATES]	false
-[RESULT]	Dendrogram.png
-[RESULT]	HeatMap.pdf
-[MANDATORY-RESULT]	A-HeatMap.png
-[MANDATORY-RESULT]	C-HeatMapLog2.png
+[MANDATORY-RESULT]	A-HeatMapScale.png
 [MANDATORY-RESULT]	B-HeatMapCor.png
-[RESULT]	NormalizedCounts.tsv
-[RESULT]	PCA.png
-[RESULT]	boxplot-pca-dendrogram.pdf
+[MANDATORY-RESULT]	C-HeatMapLog2.png
+[RESULT]	D-Dendrogram.png
+[RESULT]	E-PCA.png
+[RESULT]	F-NormalizedCounts.tsv
+[RESULT]	G-BoxPlot.png
+[RESULT]	1-HeatMapCor.pdf
+[RESULT]	2-HeatMaps.pdf
+[RESULT]	3-boxplot-pca-dendrogram.pdf
 [REQUIRED-INPUT-FILE]	VennDiagram.PostAnalysisModule/1-Intersect.tsv
 [REQUIRED-SCRIPT]	VennDiagram
 [PACKAGE]	pvclust	2.0-0

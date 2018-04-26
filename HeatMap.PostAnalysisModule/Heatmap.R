@@ -71,7 +71,7 @@ peridotCountTableNA = as.data.frame(apply(peridotCountTable, c(1, 2), function(x
   }
 }))
 
-png(filename = paste(outputFilesDir, "BoxPlot.png", sep = "/"), width=600, height=600)
+png(filename = paste(outputFilesDir, "G-BoxPlot.png", sep = "/"), width=600, height=600)
 
 boxplot(log2(peridotCountTableNA), outline = F, col=color.code[peridotConditions$condition], main = "Boxplot", las=2)
 
@@ -97,7 +97,7 @@ tperidot = t(peridotCountTable)
 
 pca = prcomp(tperidot)
 
-png(filename = paste(outputFilesDir, "PCA.png", sep = "/"), width=600, height=600)
+png(filename = paste(outputFilesDir, "E-PCA.png", sep = "/"), width=600, height=600)
 
 plot(pca$x[,1], pca$x[,2], xlab="PCA 1", ylab="PCA 2",type="p", pch=19, col=color.code[peridotConditions$condition] , cex=1.0, xlim=c(min(pca$x[,1])*1.1, max(pca$x[,1])*1.1), ylim=c(min(pca$x[,2]*1.1), max(pca$x[,2])*1.1), main = "PCA")
 
@@ -111,16 +111,16 @@ dev.off()
 
 rownames(peridotCountTable) = geneNames
 
-write.table(peridotCountTable, paste(outputFilesDir, "NormalizedCounts.tsv", sep = "/"), sep = "\t", row.names = T)
+write.table(peridotCountTable, paste(outputFilesDir, "F-NormalizedCounts.tsv", sep = "/"), sep = "\t", row.names = T)
 
 ###############################
 
 length(inter[,1])
 
 if(length(inter[,1]) > 6){
-  # Calcular dendrograma e heatmap só funciona com mais de 6 miRNAs encontrados #
+  # Calcular dendrograma e heatmap só funciona com mais de 6 samples encontrados #
 
-  peridotCountTable[] = lapply(peridotCountTable, function(x) as.integer(x))
+  #peridotCountTable[] = lapply(peridotCountTable, function(x) as.integer(x))
 
   subInter = intersect(rownames(peridotCountTable), inter[,1])
 
@@ -128,7 +128,7 @@ if(length(inter[,1]) > 6){
 
   d.pv = pvclust(d, nboot = 1000, parallel = TRUE, method.hclust = "complete", method.dist = "euclidean")
 
-  png(filename = paste(outputFilesDir, "Dendrogram.png", sep = "/"), width=600, height=600)
+  png(filename = paste(outputFilesDir, "D-Dendrogram.png", sep = "/"), width=600, height=600)
 
   plot(d.pv)
 
@@ -206,7 +206,7 @@ if(length(inter[,1]) > 6){
             col = colorRampPalette(rev(brewer.pal(n = 7, name = "RdBu")))(256), 
             cexRow = 0.9, cexCol = 0.9, key = T, keysize = 1.4, key.par=list(cex=0.5), 
             offsetRow = T, offsetCol = T,reorderfun = function(d,w) reorder(d,w, agglo.FUN = mean), 
-            main = expression(R-Peridot: ~ log[2] ~ (Count ~ reads + 0.99) ~ Heatmap), lhei = c(2,PDFheight/2), lwid = c(2,PDFwidth/2), ColSideColors = cols)
+            main = expression(R-Peridot: ~ log[2] ~ (Count ~ reads + 0.99) ~ Heatmap), lhei = c(2,7), lwid = c(2,7), ColSideColors = cols)
   
   peridotPar()
   
@@ -224,7 +224,7 @@ if(length(inter[,1]) > 6){
   if(PDFheight <= 8) {PDFheight = 10}
   if(PDFwidth <= 8) {PDFwidth = 10}
 
-  pdf(file = paste(outputFilesDir, "boxplot-pca-dendrogram.pdf", sep = "/"))
+  pdf(file = paste(outputFilesDir, "3-boxplot-pca-dendrogram.pdf", sep = "/"))
 
   par(cex.axis=0.8)
 
@@ -238,7 +238,7 @@ if(length(inter[,1]) > 6){
 
   dev.off()
 
-  pdf(file = paste(outputFilesDir, "HeatMap.pdf", sep = "/"), height = PDFheight, width = PDFwidth)
+  pdf(file = paste(outputFilesDir, "1-HeatMapCor.pdf", sep = "/"), height = PDFheight, width = PDFwidth)
   
   #### HeatMap 1 ####
   
@@ -257,6 +257,10 @@ if(length(inter[,1]) > 6){
          lwd = 8            # line width
   )
   
+  dev.off()
+
+  pdf(file = paste(outputFilesDir, "2-HeatMaps.pdf", sep = "/"), height = PDFheight, width = PDFwidth)
+
   #### HeatMap 2 ####
 
   heatmap.2(as.matrix(sig.dat), scale = "row", trace = "none", margins = c(10, 8), 
@@ -291,7 +295,6 @@ if(length(inter[,1]) > 6){
   
   dev.off()
 
-  #system(paste("pdfunite", paste(outputFilesDir, "aux1.pdf", sep = "/"), paste(outputFilesDir, "aux2.pdf", sep = "/"), paste(outputFilesDir, "HeatMap.pdf", sep = "/"), sep = " "), wait = T)
 }else{
   stop("Number of results less than 6")
 }
