@@ -16,4 +16,4 @@
 [REQUIRED-SCRIPT]	VennDiagram
 [PACKAGE]	pvclust	2.0-0
 [PACKAGE]	gplots	3.0.1
-[INFO]	HeatMap: Creates a normalized version from the inputfile for the plot of Boxplot and PCA. Then using the results of VennDiagram's "1-Intersect.tsv" for filtered the normalized inputfile with differential gene expression for a generate Dendogram plot and a Heatmap plot.
+[INFO]	HeatMap: Creates a normalized version from the inputfile for the plot of Boxplot and PCA. Then using the results of VennDiagram's "1-Intersect.tsv" for filtered the normalized inputfile with differential gene expression for a generate Dendogram plot and a Heatmap plots: Samples correlation heatmap, Scale, hclust and dist functions to Heatmap and Heatmap from log2(count_reads + 0.99).

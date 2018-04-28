@@ -206,7 +206,8 @@ if(length(inter[,1]) > 6){
             col = colorRampPalette(rev(brewer.pal(n = 7, name = "RdBu")))(256), 
             cexRow = 0.9, cexCol = 0.9, key = T, keysize = 1.4, key.par=list(cex=0.5), 
             offsetRow = T, offsetCol = T,reorderfun = function(d,w) reorder(d,w, agglo.FUN = mean), 
-            main = expression(R-Peridot: ~ log[2] ~ (Count ~ reads + 0.99) ~ Heatmap), lhei = c(2,7), lwid = c(2,7), ColSideColors = cols)
+            main = expression(R-Peridot: ~ log[2] ~ (Count ~ reads + 0.99) ~ Heatmap), lhei = c(2,7),
+            lwid = c(2,7), ColSideColors = cols, labRow = "")
   
   peridotPar()
   
@@ -238,7 +239,7 @@ if(length(inter[,1]) > 6){
 
   dev.off()
 
-  pdf(file = paste(outputFilesDir, "1-HeatMapCor.pdf", sep = "/"), height = PDFheight, width = PDFwidth)
+  pdf(file = paste(outputFilesDir, "1-HeatMapCor.pdf", sep = "/"), width=PDFwidth, height=PDFwidth)
   
   #### HeatMap 1 ####
   
@@ -263,7 +264,7 @@ if(length(inter[,1]) > 6){
 
   #### HeatMap 2 ####
 
-  heatmap.2(as.matrix(sig.dat), scale = "row", trace = "none", margins = c(10, 8), 
+  heatmap.2(as.matrix(sig.dat), scale = "row", trace = "none", margins = c(10, max(nchar(rownames(sig.dat)))/2 + 1), 
             col = colorRampPalette(rev(brewer.pal(n = 7, name = "RdBu")))(256), 
             cexRow = 0.9, cexCol = 0.9, key = T, keysize = 1.4, key.par=list(cex=0.5), 
             offsetRow = T, offsetCol = T,reorderfun = function(d,w) reorder(d,w, agglo.FUN = mean), 
@@ -281,7 +282,7 @@ if(length(inter[,1]) > 6){
   #### HeatMap 3 ####
   heatmap.2(z, hclustfun = hclustfunc, distfun = distfunc, dendrogram = "both", key = T, keysize = 1.4, 
             key.par=list(mar=c(3,1,3,1)), col = greenred(200), scale = "row", trace = "none", cexRow = 0.75, cexCol = 0.9, srtCol = 90, 
-            density.info = 'histogram', main = "R-Peridot: Scale(Count Reads) Heatmap", margins = c(10, 8),
+            density.info = 'histogram', main = "R-Peridot: Scale(Count Reads) Heatmap", margins = c(10, max(nchar(rownames(z)))/2 + 1),
             lhei = c(2,PDFheight/2), lwid = c(2,PDFwidth/2), ColSideColors = cols)
   
   peridotPar()
