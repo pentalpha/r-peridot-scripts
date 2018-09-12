@@ -72,18 +72,25 @@ ego3 = enrichGO(gene = eg$ENTREZID, universe = mappedGenes, OrgDb = orgDBName, o
 ego3@result = subset(ego3@result, (pvalue < params$pValue & qvalue < params$fdr))
 head(ego3@result)
 
-#Length of the number of Category
-lenCategoryEgo = length(ego@result$ID)
-lenCategoryEgo2 = length(ego2@result$ID)
-lenCategoryEgo3 = length(ego3@result$ID)
+egos = c(ego,ego2,ego3)
+lenCategoryEgos = c()
+for (enGo in egos){
+  lenCategoryEgos = c(lenCategoryEgos, length(enGo@result$ID))
+}
+lensDescriptionChar = c()
+i = 1
+for (enGo in egos){
+  applyed = sapply(enGo@result$Description, nchar)
+  newLen = 0
+  if (length(applyed) > 0){
+    newLen = max(applyed)
+  }
+  lensDescriptionChar = c(lensDescriptionChar, newLen)
+  i = i + 1
+}
 
-#Length of the number of chars of description
-lenDescriptionCharEgo = ifelse(lenCategoryEgo > 0, max(sapply(ego@result$Description, nchar)), 0)
-lenDescriptionCharEgo2 = ifelse(lenCategoryEgo2 > 0, max(sapply(ego2@result$Description, nchar)), 0)
-lenDescriptionCharEgo3 = ifelse(lenCategoryEgo3 > 0, max(sapply(ego3@result$Description, nchar)), 0)
-
-height = max(lenCategoryEgo, lenCategoryEgo2, lenCategoryEgo3, 48, na.rm = T)
-width = max(lenDescriptionCharEgo, lenDescriptionCharEgo2, lenDescriptionCharEgo3, 48, na.rm = T)
+height = max(lenCategoryEgos, 48, na.rm = T)
+width = max(lensDescriptionChar, 48, na.rm = T)
 
 if(height/6 <= 8){
   height = 10
@@ -101,36 +108,27 @@ if(width/6 <= 8){
   width = width/6
 }
 
-if(length(ego@result$ID) > 0){
-  dotplot(ego, title = "Ontology = MF", showCategory = lenCategoryEgo, colorBy = "pvalue")
+titles = c("Ontology = MF", "Ontology = CC", "Ontology = BP")
+pngs = c("enrichGOMF.png", "enrichGOCC.png", "enrichGOBP.jpg")
 
-  ggsave(filename = paste(outputFilesDir, "enrichGOMF.png", sep = "/"), width = width, height = height)
-}
+i = 1
+for (enGo in egos){
+  if(lenCategoryEgos[i] > 0){
+    dotplot(enGo, title = titles[i], showCategory = lenCategoryEgos[i], colorBy = "pvalue")
 
-if(length(ego2@result$ID) > 0){
-  dotplot(ego2, title = "Ontology = CC", showCategory = 100, colorBy = "pvalue")
-  
-  ggsave(filename = paste(outputFilesDir, "enrichGOCC.png", sep = "/"), width = width, height = height)
-}
-
-if(length(ego3@result$ID) > 0){
-  dotplot(ego3, title = "Ontology = BP", showCategory = length(ego3@result$ID), colorBy = "pvalue")
-
-  ggsave(filename = paste(outputFilesDir, "enrichGOBP.jpg", sep = "/"), width = width, height = height)
+    ggsave(filename = paste(outputFilesDir, pngs[i], sep = "/"), width = width, height = height)
+  }
+  i = i + 1
 }
 
 #0,077898551 inches per char
 pdf(file = paste(outputFilesDir, "enrich.pdf", sep = "/"), width = width, height = height)
-if(length(ego@result$ID) > 0){
-  dotplot(ego, title = "Ontology = MF", showCategory = length(ego@result$ID), colorBy = "pvalue")
-}
-
-if(length(ego2@result$ID) > 0){
-  dotplot(ego2, title = "Ontology = CC", showCategory = length(ego2@result$ID), colorBy = "pvalue")
-}
-
-if(length(ego3@result$ID) > 0){
-  dotplot(ego3, title = "Ontology = BP", showCategory = length(ego3@result$ID), colorBy = "pvalue")
+i = 1
+for (enGo in egos){
+  if(lenCategoryEgos[i] > 0){
+    dotplot(enGo, title = titles[i], showCategory = lenCategoryEgos[i], colorBy = "pvalue")
+  }
+  i = i + 1
 }
 
 dev.off()
@@ -138,26 +136,32 @@ dev.off()
 ##### KEGG #####
 eg2np <- bitr_kegg(eg$ENTREZID, fromType='kegg', toType='ncbi-geneid', organism=keggOrg)
 
-kk <- enrichKEGG(eg2np$kegg, organism = keggOrg, pvalueCutoff = 1, qvalueCutoff = 1)
+kegg <- enrichKEGG(eg2np$kegg, organism = keggOrg, pvalueCutoff = 1, qvalueCutoff = 1)
 
-kk@result = subset(kk@result, (pvalue < params$pValue & qvalue < params$fdr))
+kegg@result = subset(kegg@result, (pvalue < params$pValue & qvalue < params$fdr))
 
-if(length(kk@result$ID) > 0){
-  dotplot(kk, title = "KEGG Ontology", showCategory = length(kk@result$ID), colorBy = "pvalue")
+if(length(kegg@result$ID) > 0){
+  dotplot(kegg, title = "KEGG Ontology", showCategory = length(kegg@result$ID), colorBy = "pvalue")
   
   ggsave(filename = paste(outputFilesDir, "KEGG_GO.jpg", sep = "/"), width = width, height = height)
+}else{
+  print("No enriched terms found for KEGG Ontology")
 }
 
 urlPath = vector()
 
-urlPath = sapply(kk@result$ID, function(x){
-  paste0("http://www.kegg.jp/kegg-bin/show_pathway?", x, '/', kk[x, "geneID"])
+urlPath = sapply(kegg@result$ID, function(x){
+  paste0("http://www.kegg.jp/kegg-bin/show_pathway?", x, '/', kegg[x, "geneID"])
 })
 
 write.table(x = data.frame(urlPath), file = paste(outputFilesDir, "urlPaths.tsv", sep = "/"), sep = "\t", quote = F)
 
-write.table(x = ego@result, file = paste(outputFilesDir, "enrichGOMF.tsv", sep = "/"), sep = "\t", quote = F)
-
-write.table(x = ego2@result, file = paste(outputFilesDir, "enrichGOCC.tsv", sep = "/"), sep = "\t", quote = F)
-
-write.table(x = ego3@result, file = paste(outputFilesDir, "enrichGOBP.tsv", sep = "/"), sep = "\t", quote = F)
+i = 1
+for (enGo in egos){
+  if(lenCategoryEgos[i] > 0){
+    write.table(x = enGo@result, file = paste(outputFilesDir, pngs[i], sep = "/"), sep = "\t", quote = F)
+  }else{
+    print(paste("No enriched terms found for ", titles[i]))
+  }
+  i = i + 1
+}
