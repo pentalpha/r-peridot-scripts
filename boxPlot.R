@@ -79,6 +79,7 @@ getPos<-function(pos, bounds, coord){
 
 text(seq(1, length(pasillaDesign$condition), by=1), getPos(0.027,par("usr"),"y"), 
   labels = row.names(pasillaDesign), srt = 45, adj = c(1.1,1.1), xpd = TRUE, cex=.9)
+text(getPos(0.5,par("usr"),"x"),getPos(1.01,par("usr"),"y"), labels = "(rows with only zeros removed)", adj=c(0.5,0.5))
 axis(2)
 
 ncols <- ceiling(length(levelColors) / 3)
