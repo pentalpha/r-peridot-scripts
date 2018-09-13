@@ -7,6 +7,10 @@
 [RESULT]	enrichGOBP.jpg
 [RESULT]	enrichGOCC.png
 [RESULT]	enrichGOMF.png
+[RESULT]	enrichGOBP.tsv
+[RESULT]	enrichGOCC.tsv
+[RESULT]	enrichGOMF.tsv
+[RESULT]	urlPaths.tsv
 [REQUIRED-INPUT-FILE]	VennDiagram.PostAnalysisModule/1-Intersect.tsv
 [REQUIRED-SCRIPT]	VennDiagram
 [REQUIRED-PARAMETER]	fdr	Float

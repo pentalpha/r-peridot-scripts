@@ -126,7 +126,7 @@ pdf(file = paste(outputFilesDir, "enrich.pdf", sep = "/"), width = width, height
 i = 1
 for (enGo in egos){
   if(lenCategoryEgos[i] > 0){
-    dotplot(enGo, title = titles[i], showCategory = lenCategoryEgos[i], colorBy = "pvalue")
+    print(dotplot(enGo, title = titles[i], showCategory = lenCategoryEgos[i], colorBy = "pvalue"))
   }
   i = i + 1
 }
@@ -156,10 +156,11 @@ urlPath = sapply(kegg@result$ID, function(x){
 
 write.table(x = data.frame(urlPath), file = paste(outputFilesDir, "urlPaths.tsv", sep = "/"), sep = "\t", quote = F)
 
+tables <- c("enrichGOMF.tsv", "enrichGOCC.tsv", "enrichGOBP.tsv")
 i = 1
 for (enGo in egos){
   if(lenCategoryEgos[i] > 0){
-    write.table(x = enGo@result, file = paste(outputFilesDir, pngs[i], sep = "/"), sep = "\t", quote = F)
+    write.table(x = enGo@result, file = paste(outputFilesDir, tables[i], sep = "/"), sep = "\t", quote = F)
   }else{
     print(paste("No enriched terms found for ", titles[i]))
   }
