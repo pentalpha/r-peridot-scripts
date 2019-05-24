@@ -237,12 +237,12 @@ peridotCountTable = as.data.frame(lapply(peridotCountTable, function(x) (x/sum(x
 rownames(peridotCountTable) = geneNames
 
 # Plot normalized counts for each differentially expressed gene
-dir.create(file.path(outputFilesDir, 'countPlots'))
-apply(X = as.data.frame(interUniverse[,1]), MARGIN = 1, FUN = function(x){
-  png(filename = paste(outputFilesDir, "/countPlots/", x, ".png", sep = ""), width = 600, height = 600)
-  
-  plot(x = as.integer(peridotConditions$condition) + runif(ncol(peridotCountTable),-.05,.05), y = peridotCountTable[rownames(peridotCountTable) == x,], main = x, xlab = "group", ylab = "normalized count", xlim=c(.5,max(as.integer(peridotConditions$condition))+.5), log="y", xaxt = "n")
-  axis(1, at=seq_along(levels(as.factor(peridotConditions$condition))), levels(as.factor(peridotConditions$condition)))
-  
-  dev.off()  
-})
+#dir.create(file.path(outputFilesDir, 'countPlots'))
+#apply(X = as.data.frame(interUniverse[,1]), MARGIN = 1, FUN = function(x){
+#  png(filename = paste(outputFilesDir, "/countPlots/", x, ".png", sep = ""), width = 600, height = 600)
+#  
+#  plot(x = as.integer(peridotConditions$condition) + runif(ncol(peridotCountTable),-.05,.05), y = peridotCountTable[rownames(peridotCountTable) == x,], main = x, xlab = "group", ylab = "normalized count", xlim=c(.5,max(as.integer(peridotConditions$condition))+.5), log="y", xaxt = "n")
+#  axis(1, at=seq_along(levels(as.factor(peridotConditions$condition))), levels(as.factor(peridotConditions$condition)))
+#  
+#  dev.off()  
+#})
