@@ -19,7 +19,9 @@ notFirstRun
 setwd(localDir)
 options(bitmapType='cairo')
 #Get directory
-FileConfig = getwd()
+FileConfigPath = paste(localDir, "config.txt", sep = "/")
+FileConfig = read.table(FileConfigPath, header = TRUE, row.names = 1, sep = "|")
+minPackages = FileConfig$minimumPackagesForConsensus
 
 setDESeq = NULL
 setEBSeq = NULL
@@ -206,6 +208,12 @@ colnames(interUniverse)
 
 write.table(interUniverse, paste(outputFilesDir, "1-Intersect.tsv", sep = "/"), sep = "\t", row.names = F, col.names = T)
 
+
+enough_packages = apply(interUniverse, 1, function(x){
+  length(unlist(strsplit(x[2],","))) >= minPackages
+})
+consensus <- interUniverse[enough_packages, ]
+write.table(consensus, paste(outputFilesDir, "4-Consensus.tsv", sep = "/"), sep = "\t", row.names = F, col.names = T)
 ##### INICIO DO chooseGene.R #####
 
 #Read file example

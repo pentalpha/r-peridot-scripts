@@ -86,7 +86,7 @@ library(gplots)
 library(RColorBrewer)
 
 # Abrir o arquivo de miRNAs achados nos pacotes do R-peridot #
-intersectFile = paste(inputFilesDir, "VennDiagram.PostAnalysisModule/1-Intersect.tsv", sep = "/")
+intersectFile = paste(inputFilesDir, "VennDiagram.PostAnalysisModule/4-Consensus.tsv", sep = "/")
 
 inter = read.table(file = intersectFile, header = F, sep = "\t")
 
