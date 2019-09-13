@@ -213,44 +213,8 @@ enough_packages = apply(interUniverse, 1, function(x){
   length(unlist(strsplit(x[2],","))) >= minPackages
 })
 consensus <- interUniverse[enough_packages, ]
-write.table(consensus, paste(outputFilesDir, "4-Consensus.tsv", sep = "/"), sep = "\t", row.names = F, col.names = T)
-##### INICIO DO chooseGene.R #####
-
-#Read file example
-peridotCountTable = read.table(paste(inputFilesDir, "rna-seq-input.tsv", sep = "/"), header=TRUE, row.names=1 )
-
-geneNames = rownames(peridotCountTable)
-
-peridotConditions = read.table(paste(inputFilesDir, "condition-input.tsv", sep = "/"), header=TRUE, row.names=1)
-peridotConditions
-
-#Ignore samples with "not-use" indicated
-#first, remove they from the conditions table
-peridotConditions <- subset(peridotConditions, condition != "not-use")
-#then, remove from the counts table
-for(i in colnames(peridotCountTable)){
-  iContainsNotUse = length(grep("not.use", as.name(i))) > 0
-  if(iContainsNotUse){
-    #erases the column
-    peridotCountTable[, i] = NULL
-  }
+if (length(consensus[,1]) > 0){
+  write.table(consensus, paste(outputFilesDir, "4-Consensus.tsv", sep = "/"), sep = "\t", row.names = F, col.names = T)
+}else{
+  "No consensus to write."
 }
-#Finally, drop unused levels (not-use levels)
-peridotConditions = droplevels(peridotConditions)
-peridotConditions
-
-# Normalizar o dado de entrada #
-peridotCountTable = as.data.frame(lapply(peridotCountTable, function(x) (x/sum(x))*10000000))
-
-rownames(peridotCountTable) = geneNames
-
-# Plot normalized counts for each differentially expressed gene
-#dir.create(file.path(outputFilesDir, 'countPlots'))
-#apply(X = as.data.frame(interUniverse[,1]), MARGIN = 1, FUN = function(x){
-#  png(filename = paste(outputFilesDir, "/countPlots/", x, ".png", sep = ""), width = 600, height = 600)
-#  
-#  plot(x = as.integer(peridotConditions$condition) + runif(ncol(peridotCountTable),-.05,.05), y = peridotCountTable[rownames(peridotCountTable) == x,], main = x, xlab = "group", ylab = "normalized count", xlim=c(.5,max(as.integer(peridotConditions$condition))+.5), log="y", xaxt = "n")
-#  axis(1, at=seq_along(levels(as.factor(peridotConditions$condition))), levels(as.factor(peridotConditions$condition)))
-#  
-#  dev.off()  
-#})

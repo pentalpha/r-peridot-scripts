@@ -111,11 +111,11 @@ dev.off()
 
 rownames(peridotCountTable) = geneNames
 
+"HeatMap module needs an intersection length > 6."
+
 write.table(peridotCountTable, paste(outputFilesDir, "F-NormalizedCounts.tsv", sep = "/"), sep = "\t", row.names = T)
 
 ###############################
-
-length(inter[,1])
 
 if(length(inter[,1]) > 6){
   # Calcular dendrograma e heatmap só funciona com mais de 6 samples encontrados #
