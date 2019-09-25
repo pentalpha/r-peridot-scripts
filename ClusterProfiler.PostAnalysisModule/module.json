@@ -1,0 +1,34 @@
+{
+    "RESULTS": [
+        "KEGG_GO.jpg",
+        "enrichGOBP.jpg",
+        "enrichGOBP.tsv",
+        "enrichGOCC.png",
+        "enrichGOCC.tsv",
+        "enrichGOMF.png",
+        "enrichGOMF.tsv",
+        "urlPaths.tsv"
+    ],
+    "MANDATORY-RESULTS": ["enrich.pdf"],
+    "MAX-2-CONDITIONS": false,
+    "REQUIRED-INPUT-FILES": ["VennDiagram.PostAnalysisModule/4-Consensus.tsv"],
+    "SCRIPT-NAME": "clusterProfiler.R",
+    "PACKAGES": {
+        "org.Mm.eg.db": "3.4.1",
+        "ggplot2": "2.2.1",
+        "org.Dm.eg.db": "3.4.1",
+        "org.Hs.eg.db": "3.4.1",
+        "clusterProfiler": "3.4.2"
+    },
+    "REQUIRED-SCRIPTS": ["VennDiagram"],
+    "NEEDS-REPLICATES": false,
+    "REQUIRES-ALL-DEPENDENCIES": true,
+    "REQUIRED-PARAMETERS": {
+        "idType": "GeneIdType",
+        "referenceOrganism": "Organism",
+        "fdr": "Float",
+        "pValue": "Float"
+    },
+    "INFO": "ClusterProfiler: Statistical analysis and visualization of functional profiles for genes and gene clusters.\nThis package implements methods to analyze and visualize functional profiles (GO and KEGG) of gene and gene clusters.\nWith the list of genes of results of VennDiagram's \"4-Consensus.tsv\" generates plots from the \"MF\", \"CC\" and \"BP\" ontologys and the ontology from the KEGG.\nAuthor: Guangchuang Yu [aut, cre], Li-Gen Wang [ctb], Giovanni Dall'Olio [ctb] (formula interface of compareCluster)\nMaintainer: Guangchuang Yu <guangchuangyu at gmail.com>\n",
+    "NAME": "ClusterProfiler"
+}

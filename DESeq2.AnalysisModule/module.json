@@ -1,0 +1,27 @@
+{
+    "RESULTS": [
+        "2-histogram.png",
+        "3-MAPlot.png",
+        "4-volcanoPlot.png",
+        "5-plots.pdf"
+    ],
+    "MANDATORY-RESULTS": ["1-res.tsv"],
+    "MAX-2-CONDITIONS": true,
+    "REQUIRED-INPUT-FILES": [
+        "condition-input.tsv",
+        "rna-seq-input.tsv"
+    ],
+    "SCRIPT-NAME": "scriptDESeq2.R",
+    "PACKAGES": {"DESeq2": "1.16.1"},
+    "REQUIRED-SCRIPTS": [],
+    "NEEDS-REPLICATES": true,
+    "REQUIRES-ALL-DEPENDENCIES": true,
+    "REQUIRED-PARAMETERS": {
+        "fdr": "Float",
+        "foldChange": "Float",
+        "tops": "Integer",
+        "pValue": "Float"
+    },
+    "INFO": "DESeq2: Differential gene expression analysis based on the negative binomial distribution.\nEstimate variance-mean dependence in count data from high-throughput sequencing assays and test for differential expression based on a model using the negative binomial distribution.\nThe standard differential expression analysis steps are wrapped into a single function, called DESeq which is similar to the DESeq package.\nAuthor: Michael Love, Simon Anders, Wolfgang Huber.\nMaintainer: Michael Love <michaelisaiahlove at gmail.com>.\n",
+    "NAME": "DESeq2"
+}

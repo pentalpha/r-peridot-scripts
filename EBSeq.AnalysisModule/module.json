@@ -1,0 +1,27 @@
+{
+    "RESULTS": [
+        "2-histogram.png",
+        "3-MAPlot.png",
+        "4-volcanoPlot.png",
+        "5-plots.pdf"
+    ],
+    "MANDATORY-RESULTS": ["1-res.tsv"],
+    "MAX-2-CONDITIONS": true,
+    "REQUIRED-INPUT-FILES": [
+        "condition-input.tsv",
+        "rna-seq-input.tsv"
+    ],
+    "SCRIPT-NAME": "scriptEBSeq.R",
+    "PACKAGES": {"EBSeq": "1.16.0"},
+    "REQUIRED-SCRIPTS": [],
+    "NEEDS-REPLICATES": false,
+    "REQUIRES-ALL-DEPENDENCIES": true,
+    "REQUIRED-PARAMETERS": {
+        "fdr": "Float",
+        "foldChange": "Float",
+        "tops": "Integer",
+        "pValue": "Float"
+    },
+    "INFO": "EBSeq: An R package for gene and isoform differential expression analysis of RNA-seq data.\nDifferential Expression analysis at both gene and isoform level using RNA-seq data.\nEBSeq requires the library size factor for each sample. Here, may be obtained via the function MedianNorm, which reproduces the median normalization approach in DESeq. The function EBTest is used to detect DE genes. sizeFactors is used to define the library size factor of each sample. It could be obtained by summing up the total number of reads within each sample. In conclusion of EBTest function the output is one dataframe with data which will filtered from the defined parameters in R-Peridot.\nAuthor: Ning Leng, Christina Kendziorski.\nMaintainer: Ning Leng <lengning1 at gmail.com>.\n",
+    "NAME": "EBSeq"
+}

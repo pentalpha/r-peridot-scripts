@@ -1,0 +1,27 @@
+{
+    "RESULTS": [
+        "2-histogram.png",
+        "3-MAPlot.png",
+        "4-volcanoPlot.png",
+        "5-plots.pdf"
+    ],
+    "MANDATORY-RESULTS": ["1-res.tsv"],
+    "MAX-2-CONDITIONS": false,
+    "REQUIRED-INPUT-FILES": [
+        "condition-input.tsv",
+        "rna-seq-input.tsv"
+    ],
+    "SCRIPT-NAME": "scriptSeq.R",
+    "PACKAGES": {"sSeq": "1.14.0"},
+    "REQUIRED-SCRIPTS": [],
+    "NEEDS-REPLICATES": false,
+    "REQUIRES-ALL-DEPENDENCIES": true,
+    "REQUIRED-PARAMETERS": {
+        "fdr": "Float",
+        "foldChange": "Float",
+        "tops": "Integer",
+        "pValue": "Float"
+    },
+    "INFO": "sSeq: Shrinkage estimation of dispersion in Negative Binomial models for RNA-seq experiments with small sample size.\nThe purpose of this package is to discover the genes that are differentially expressed between two conditions in RNA-seq experiments. Gene expression is measured in counts of transcripts and modeled with the Negative Binomial (NB) distribution using a shrinkage approach for dispersion estimation. The method of moment (MM) estimates for dispersion are shrunk towards an estimated target, which minimizes the average squared difference between the shrinkage estimates and the initial estimates. The exact per-gene probability under the NB model is calculated, and used to test the hypothesis that the expected expression of a gene in two conditions identically follow a NB distribution.\nAfter defining the input counts table and the groups for conditions, the function \u201cnbTestSH\u201d can be utilized to obtain the regularized dispersion estimates and perform the exact tests.  The output is a data frame in which the \u201cpval\u201d column includes the p-values of the exact tests and results presents in others packages which will filtered from the defined parameters in R-Peridot.\nAuthor: Danni Yu <dyu at purdue.edu>, Wolfgang Huber <whuber at embl.de> and Olga Vitek <ovitek at purdue.edu>\nMaintainer: Danni Yu <dyu at purdue.edu>\n",
+    "NAME": "sSeq"
+}

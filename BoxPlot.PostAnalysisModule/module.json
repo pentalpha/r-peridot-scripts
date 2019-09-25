@@ -1,0 +1,14 @@
+{
+    "RESULTS": [],
+    "MANDATORY-RESULTS": ["BoxPlot.png"],
+    "MAX-2-CONDITIONS": false,
+    "REQUIRED-INPUT-FILES": [],
+    "SCRIPT-NAME": "scriptBoxPlot.R",
+    "PACKAGES": {},
+    "REQUIRED-SCRIPTS": [],
+    "NEEDS-REPLICATES": false,
+    "REQUIRES-ALL-DEPENDENCIES": true,
+    "REQUIRED-PARAMETERS": {},
+    "INFO": "BoxPlot: Produces box-and-whisker plot of each sample reads with different colors for each condition.\n",
+    "NAME": "BoxPlot"
+}

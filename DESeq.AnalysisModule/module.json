@@ -1,0 +1,27 @@
+{
+    "RESULTS": [
+        "2-histogram.png",
+        "3-MAPlot.png",
+        "4-volcanoPlot.png",
+        "5-plots.pdf"
+    ],
+    "MANDATORY-RESULTS": ["1-res.tsv"],
+    "MAX-2-CONDITIONS": true,
+    "REQUIRED-INPUT-FILES": [
+        "condition-input.tsv",
+        "rna-seq-input.tsv"
+    ],
+    "SCRIPT-NAME": "scriptDESeq.R",
+    "PACKAGES": {"DESeq": "1.28.0"},
+    "REQUIRED-SCRIPTS": [],
+    "NEEDS-REPLICATES": true,
+    "REQUIRES-ALL-DEPENDENCIES": true,
+    "REQUIRED-PARAMETERS": {
+        "fdr": "Float",
+        "foldChange": "Float",
+        "tops": "Integer",
+        "pValue": "Float"
+    },
+    "INFO": "DESeq: Differential gene expression analysis based on the negative binomial distribution.\nEstimate variance-mean dependence in count data from high-throughput sequencing assays and test for differential expression based on a model using the negative binomial distribution\nAs a first processing step is to estimate the effective library size from input file. This step is sometimes also called normalisation.\nAfter Obtains dispersion estimates, i.e. the dispersion can be understood as the square of the coefficient of biological variation for a count data set.\nHaving  estimated  the  dispersion  for  each  gene,  it  is  straight-forward  to  look  for  differentially  expressed  genes.\nIn conclusion of nbinomTest function the output is one dataframe with data which will filtered from the defined parameters in R-Peridot.\nAuthor: Simon Anders, EMBL Heidelberg <sanders at fs.tum.de>.\nMaintainer: Simon Anders <sanders at fs.tum.de>.\n",
+    "NAME": "DESeq"
+}
