@@ -1,7 +1,0 @@
-[NAME]	CountPlots
-[SCRIPT-NAME]	countPlots.R
-[MAX-2-CONDITIONS]	false
-[NEEDS-REPLICATES]	false
-[REQUIRED-SCRIPT]	VennDiagram
-[REQUIRES-ALL-DEPENDENCIES]	false
-[INFO]	CountPlots: Reads the results from VennDiagram and creates, for each differentially expressed gene, a plot of it's counts across all conditions.

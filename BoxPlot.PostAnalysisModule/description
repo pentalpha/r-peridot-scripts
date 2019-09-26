@@ -1,6 +1,0 @@
-[NAME]	BoxPlot
-[SCRIPT-NAME]	scriptBoxPlot.R
-[MAX-2-CONDITIONS]	false
-[NEEDS-REPLICATES]	false
-[MANDATORY-RESULT]	BoxPlot.png
-[INFO]	BoxPlot: Produces box-and-whisker plot of each sample reads with different colors for each condition.
